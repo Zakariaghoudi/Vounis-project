@@ -74,6 +74,7 @@ const initialState = {
   user: null,
   userList: [],
   status: null,
+  error: null,
 };
 export const userSlice = createSlice({
   name: "user",
@@ -90,79 +91,87 @@ export const userSlice = createSlice({
     // User registration : DONE
     builder.addCase(userRegister.pending, (state) => {
       state.status = "pending";
+      state.error = null;
     });
     builder.addCase(userRegister.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.user = action.payload;
+      state.user = action.payload.user;
       localStorage.setItem("token", action.payload.token);
     });
-    builder.addCase(userRegister.rejected, (state) => {
+    builder.addCase(userRegister.rejected, (state, action) => {
       state.status = "failed";
+      state.error = action.payload;
     });
     //  for login : DONE
     builder.addCase(userLogin.pending, (state) => {
       state.status = "pending";
+      state.error = null;
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.user = action.payload;
+      state.user = action.payload.user;
       localStorage.setItem("token", action.payload.token);
     });
-    builder.addCase(userLogin.rejected, (state) => {
+    builder.addCase(userLogin.rejected, (state, action) => {
       state.status = "failed";
+      state.error = action.payload;
     });
 
     //  for currentUser  : DONE
     builder.addCase(currentUser.pending, (state) => {
       state.status = "pending";
-      state.user = null;
+      state.error = null;
     });
     builder.addCase(currentUser.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.user = action.payload;
+      state.user = action.payload.user;
     });
-    builder.addCase(currentUser.rejected, (state) => {
+    builder.addCase(currentUser.rejected, (state, action) => {
       state.status = "failed";
-      state.user = null;
+      state.error = action.payload;
     });
 
     // for get all users : DONE
     builder.addCase(getUser.pending, (state) => {
       state.status = "pending";
+      state.error = null;
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.userList = action.payload.users;
+      state.userList = action.payload.data?.users || [];
     });
-    builder.addCase(getUser.rejected, (state) => {
+    builder.addCase(getUser.rejected, (state, action) => {
       state.status = "failed";
       state.userList = [];
+      state.error = action.payload;
     });
 
 // update : edit profile of user
  builder.addCase(editUser.pending, (state) => {
       state.status = "pending";
+      state.error = null
     });
     builder.addCase(editUser.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.userList = action.payload;
+      state.user = action.payload;
     });
-    builder.addCase(editUser.rejected, (state) => {
+    builder.addCase(editUser.rejected, (state, action) => {
       state.status = "failed";
-      state.userList = [];
+      state.error = action.payload;
     });
 
 // delete user 
  builder.addCase(deleteUser.pending, (state) => {
       state.status = "pending";
+      state.error = null;
     });
     builder.addCase(deleteUser.fulfilled, (state, action) => {
       state.status = "fulfilled";
       state.userList = action.payload.data;
     });
-    builder.addCase(deleteUser.rejected, (state) => {
+    builder.addCase(deleteUser.rejected, (state,action) => {
       state.status = "failed";
-      state.userList = [];
+      state.error = action.payload;
     });
   },
 });

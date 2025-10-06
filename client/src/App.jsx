@@ -11,6 +11,7 @@ import Register from "./pages/register";
 //------import the private pages-----
 import PrivateRoute from "./privateRoutes/privateRoute";
 import VolunteerProfil from "./pages/volunteerProfil";
+import ProfileHost from "./pages/profileHost";
 //-----import slices and hooks----------
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,18 +21,20 @@ import { currentUser, getUser } from "./app/Slices/userSlice";
 import { getApplication } from "./app/Slices/appSlice";
 
 function App() {
+  const person = useSelector ((state)=> state.user.user);
+  const persons = useSelector((state) => state.user.userList);
+  const currentuser = persons.filter((el)=> el._id == person?._id)
+  console.log("the user by id :", currentuser);
+
+
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUser());
     dispatch(currentUser());
     dispatch(getApplication());
   }, []);
-
-  const application = useSelector(
-      (state) => state.application.application
-    );
-console.log(application);
-  return (
+    return (
     <>
       <Header />
       <Routes>
@@ -42,7 +45,8 @@ console.log(application);
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/volunteer-profil" element={<VolunteerProfil />} />
+          <Route path="/volunteer-profil" element={<VolunteerProfil currentuser={currentuser} />} />
+          <Route path="/profile-host" element={<ProfileHost />} />
         </Route>
       </Routes>
 

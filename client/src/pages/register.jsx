@@ -14,6 +14,8 @@ function Register() {
   });
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(userRegister(form));
+    navigate("/")
   };
   const dispatch = useDispatch();
   const handleRoleChange=(e)=> {
@@ -24,6 +26,7 @@ function Register() {
       role: newRole,
     });
   };
+  const navigate = useNavigate();
   return (
     <form className="wrapper" onSubmit={handleSubmit}>
       <h2>Resgister</h2>
@@ -74,12 +77,9 @@ function Register() {
           <label>Are you a Host ? </label>
       </div>
 
-      <button
-        onClick={() => {
-          dispatch(userRegister(form));
-          
-        }}
-      >
+      <button 
+      type="submit"
+        >
         Register
       </button>
       <div className="register">

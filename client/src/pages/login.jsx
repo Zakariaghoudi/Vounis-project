@@ -41,7 +41,7 @@ const login = () => {
         onClick={() => {
           dispatch(userLogin(form));
           setTimeout(() => {
-            navigate("/volunteer-profil");
+            navigate("/");
           }, 1000);
         }}
       >

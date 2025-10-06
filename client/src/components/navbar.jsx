@@ -1,9 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import {useState} from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../app/Slices/userSlice";
 import {FaBars, FaTimes} from "react-icons/fa";
-const navbar = () => {
+const Navbar = () => {
+
+  const checkUser = useSelector((state) => state.user.user);
+
 //---- state form toggle menu----
 const [openMenu, setOpenMenu]= useState(false);
 const toggleMenu = ()=>{
@@ -39,7 +42,17 @@ const toggleMenu = ()=>{
         </ul>
         </div>
       <div className="links">
-        {isAuth ? (
+        {checkUser  ? (
+        <>
+          <button className="btn-signin">
+                <Link to={
+                checkUser?.role === "volunteer"
+                  ? "/volunteer-profil"
+                  :  "/profile-host"
+              }>
+               Profil
+               </Link> 
+            </button>
           <button
             className="btn-logout"
             onClick={() => {
@@ -50,6 +63,8 @@ const toggleMenu = ()=>{
             Logout
             <Link to={"/profil"} />
           </button>
+        
+            </>
         ) : (
           <div className="btn">
             <button className="btn-signin">
@@ -66,4 +81,4 @@ const toggleMenu = ()=>{
   );
 };
 
-export default navbar;
+export default Navbar ;
