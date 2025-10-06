@@ -13,34 +13,34 @@ applicationRouter.post("/add", async (req, res) => {
     result.save();
     res.send("Application added", result);
   } catch (error) {
-    console.log(error);
+    res.status(402).send({ msg: "try again", error });
   }
 });
 // get all opportunities
 applicationRouter.get("/", async (req, res) => {
   try {
     const result = await Application.find();
-    res.send({ opportunities: result, message: "opportunities found" });
+    res.send({ applications: result, message: "application found" });
   } catch (error) {
-    console.log(error);
+      res.status(400).send({msg: "no application found", error});
   }
 });
 // update an Application
 applicationRouter.put("/:id", async (req, res) => {
   try {
     const result = await Application.findByIdAndUpdate(req.params.id, req.body);
-    res.send({ Application: result, message: "Application updated" });
+    res.send({ application: result, message: "Application updated" });
   } catch (error) {
-    console.log(error);
+      res.status(400).send({msg: "no updated found", error});
   }
 });
 // dalete an Application 
 applicationRouter.delete("/:id", async (req, res) => {
     try {
         const result = await Application.findByIdAndDelete(req.params.id);
-        res.send({ Application: result, message: "Application deleted" }); 
+        res.send({ application: result, message: "Application deleted" }); 
     } catch (error) {
-        console.log(error);
+      res.status(400).send({msg: "try again", error});
     }
 });
 module.exports = applicationRouter;

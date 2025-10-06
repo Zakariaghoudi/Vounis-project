@@ -22,6 +22,7 @@ const userSchema = new schema(
     },
     phoneNumber: Number,
     description: String,
+    skills: String,
     profilePhoto: {
       type: String,
       default:

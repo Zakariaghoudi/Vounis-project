@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import { userLogin } from "../app/userSlice/userSlice";
+import { userLogin } from "../app/Slices/userSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import "./register.css";
+import "../styles/register.css";
 
 const login = () => {
   const [form, setForm] = useState({
@@ -41,8 +41,8 @@ const login = () => {
         onClick={() => {
           dispatch(userLogin(form));
           setTimeout(() => {
-            navigate("/profil");
-          },1000);
+            navigate("/volunteer-profil");
+          }, 1000);
         }}
       >
         Login

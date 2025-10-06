@@ -24,6 +24,8 @@ exports.loginRules = () => [
     max: 20,
   }),
 ];
+
+
 exports.validate = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -31,3 +33,5 @@ exports.validate = (req, res, next) => {
   }
   return next();
 };
+
+

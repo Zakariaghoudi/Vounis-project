@@ -4,13 +4,14 @@ const Opportunity = require("../models/opportunityModel");
 
 //add new opportunity
 opportunityRouter.post("/add", async (req, res) => {
-  const { id_host, status, description, title, skills, location } = req.body;
   try {
-    const result = await new Opportunity(req.body);
-    result.save();
-    res.send("opportunity added", result);
+  const { id_host, status, description, title, skills, location } = req.body
+  const result =  await new Opportunity(req.body);
+    await result.save();
+    res.send("your opportunity added", result);
   } catch (error) {
-    console.log(error);
+   res.status(402).send({msg :"try again",error});
+  console.log(error)
   }
 });
 // get all opportunities

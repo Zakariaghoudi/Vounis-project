@@ -3,13 +3,19 @@ const schema = mongoose.Schema;
 
 const opportunitySchema = new schema(
   {
-    id_host: String,
+    id_host: {
+      type: String,
+      require: true  
+    },
+
     status: {
       type: String,
       enum: ['closed' , 'open'],
       default: "open",
     },
-    title: { type: String, required: true },
+    title: {
+       type: String,
+        require: true },
     description: String,
     skills: String,
     location: String,

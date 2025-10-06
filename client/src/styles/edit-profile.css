@@ -1,0 +1,123 @@
+:root {
+  --primary-color: #4caf50;
+  --text-color: #333;
+  --border-color: #ddd;
+  --background-light: #f9f9f9;
+}
+main{
+  background-color:  #f9f9f9;
+}
+
+.profile-container {
+  background-color: none;
+  width: 100%;
+  display: flex;
+}
+
+.page-title {
+  color: var(--text-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+}
+
+.page-subtitle {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.profile-header-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 40px;
+}
+
+.profile-avatar {
+  margin-left: 30px;
+  text-align: center;
+}
+
+.avatar-placeholder {
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #eee;
+  border: 3px solid var(--primary-color);
+  margin-bottom: 10px;
+  line-height: 100px;
+  color: #999;
+  font-size: 14px;
+}
+
+.change-photo-btn {
+  background-color: var(--background-light);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 6px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.2s;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 800px;
+  padding: 40px;
+  margin: 20px auto;
+  border: 2px solid #43a047;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.profile-form input,
+.profile-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+
+.skill-tag {
+  background-color: #e8f5e9;
+  color: var(--primary-color);
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 13px;
+  cursor: default;
+}
+
+.save-changes-btn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.save-changes-btn:hover {
+  background-color: #43a047;
+}
+
+

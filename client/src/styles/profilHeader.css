@@ -1,0 +1,53 @@
+
+
+.left-section {
+  padding-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 20px;
+  width: 350px;
+  height: 90vh;
+  /* background: linear-gradient(var(--color-background-light) 35%, transparent 65%); */
+  background :var(--color-background-light);
+}
+.info {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.photo-profil {
+  width: 150px;
+  height: 150px;
+  padding: 10px;
+  object-fit: cover;
+}
+.section-name {
+  color: rgb(18, 184, 142);
+  font-size: 20px bold;
+  margin: 0;
+}
+.role {
+  color: black;
+  padding: 15px;
+}
+.btn-edit {
+  padding: 10px 20px;
+  background: var(--color-primary-green);
+  color: white;
+}
+.btn-logoutt {
+  padding: 10px 60px;
+  background: rgba(177, 9, 9, 0.822);
+  color: white;
+  margin-top: 6rem;
+}
+.btn-logoutt :hover {
+  background: white;
+  color: red;
+  border: 1px solid red;
+}
+
+

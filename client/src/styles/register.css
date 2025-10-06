@@ -2,7 +2,7 @@
  margin: 0 auto;
  margin-top: 50px;
   max-width: 400px;
-  max-height :500px ;
+  max-height :550px ;
   border-radius: 8px;
   padding: 35px;
   text-align: center;
@@ -15,11 +15,11 @@ form {
 h2 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: var(--color-text-dark);
+  color: var(--color-text-light);
 }
 .input-field {
   position: relative;
-  border-bottom: 1px solid var(--color-text-dark);
+  border-bottom: 1px solid var(--color-text-light);
   margin: 15px 0;
 }
 .input-field label {
@@ -27,7 +27,7 @@ h2 {
   top: 50%;
   left: 0;
   transform: translateY(-40%);
-  color: var(--color-text-dark);
+  color: var(--color-text-light);
   font-size: 16px;
   pointer-events: none;
   transition: 0.15s ease;
@@ -39,7 +39,7 @@ h2 {
   border: none;
   outline: none;
   font-size: 16px;
-  color: var(--color-text-dark);
+  color: var(--color-text-light);
 }
 .input-field input:focus~label,
 .input-field input:valid~label {
@@ -57,7 +57,7 @@ h2 {
 }
 .wrapper button {
   margin-top: 10px;
-  background: var(--color-secondary-blue) ;
+  background: var(--color-primary-green) ;
   color: var(--color-text-light);
   font-weight: 600;
   padding: 10px 20px;
@@ -72,6 +72,16 @@ button:hover {
 }
 .register {
   text-align: center;
-  margin-top: 30px;
   color: #fff;
+}
+.inputField{
+  display: flex;
+  color: rgb(211, 206, 206);
+}
+.inputField [type="checkbox"]{
+  width: 20px;
+}
+.inputField label{
+  padding:5px;
+  font-size: bold;
 }
