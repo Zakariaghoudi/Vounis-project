@@ -13,6 +13,7 @@ export const userRegister = createAsyncThunk("/user/register", async (user) => {
     console.log(error);
   }
 });
+
 //  for login user : DONE
 export const userLogin = createAsyncThunk("/user/login", async (user) => {
   try {
@@ -72,9 +73,9 @@ export const deleteUser = createAsyncThunk("/delete/user", async (id) => {
 
 const initialState = {
   user: null,
-  userList: [],
   status: null,
   error: null,
+  userList: [],
 };
 export const userSlice = createSlice({
   name: "user",
@@ -109,7 +110,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.user = action.payload.user;
+      state.user = action.payload;
       localStorage.setItem("token", action.payload.token);
     });
     builder.addCase(userLogin.rejected, (state, action) => {
@@ -138,7 +139,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.userList = action.payload.data?.users || [];
+      state.userList = action.payload?.users || [];
     });
     builder.addCase(getUser.rejected, (state, action) => {
       state.status = "failed";

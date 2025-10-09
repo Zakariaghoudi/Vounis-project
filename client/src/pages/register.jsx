@@ -28,43 +28,46 @@ function Register() {
   };
   const navigate = useNavigate();
   return (
-    <form className="wrapper" onSubmit={handleSubmit}>
-      <h2>Resgister</h2>
-      <div className="input-field">
+    <register className="page-register">
+    <form className="register-form" onSubmit={handleSubmit}>
+      <h2>Resgister Now</h2>
+      <div className="name-lastname">
+      <div className="input-register">
+        <label>Name</label>
         <input
           type="text"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
           required
         />
-        <label>Name</label>
       </div>
-      <div className="input-field">
+      <div className="input-register">
+        <label>Last Name</label>
         <input
           type="text"
           value={form.lastName}
           onChange={(e) => setForm({ ...form, lastName: e.target.value })}
           required
         />
-        <label>Last Name</label>
       </div>
-      <div className="input-field">
+      </div>
+      <div className="input-register">
+        <label>Enter your email</label>
         <input
           type="email"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required
         />
-        <label>Enter your email</label>
       </div>
-      <div className="input-field">
+      <div className="input-register">
+        <label>Enter your password</label>
         <input
           type="password"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
         />
-        <label>Enter your password</label>
           </div>
         
         <div className="inputField">
@@ -88,6 +91,7 @@ function Register() {
         </p>
       </div>
     </form>
+    </register>
   );
 }
 

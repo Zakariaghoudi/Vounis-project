@@ -15,28 +15,26 @@ import ProfileHost from "./pages/profileHost";
 //-----import slices and hooks----------
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import HowItWorks from "./pages/howItWork";
 import { currentUser, getUser } from "./app/Slices/userSlice";
 import { getApplication } from "./app/Slices/appSlice";
+import DashAdmin from "./pages/dashAdmin";
 
 function App() {
-  const person = useSelector ((state)=> state.user.user);
-  const persons = useSelector((state) => state.user.userList);
-  const currentuser = persons.filter((el)=> el._id == person?._id)
-  console.log("the user by id :", currentuser);
-
-
-
+  //-------to re render when we update our profile------
+  const [ping,setping]= useState(false);
+  // const currentuser = persons.filter((el) => el._id == person?._id);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUser());
     dispatch(currentUser());
     dispatch(getApplication());
-  }, []);
-    return (
+  }, [ping]);
+  
+  return (
     <>
-      <Header />
+      <Header ping={ping} setping={setping} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/how-it-work" element={<HowItWorks />} />
@@ -45,8 +43,12 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/volunteer-profil" element={<VolunteerProfil currentuser={currentuser} />} />
-          <Route path="/profile-host" element={<ProfileHost />} />
+          <Route
+            path="/profil-volunteer"
+            element={<VolunteerProfil   />}
+          />
+          <Route path="/profil-host" element={<ProfileHost  />} />
+          <Route path="/profil-admin" element={<DashAdmin />} />
         </Route>
       </Routes>
 

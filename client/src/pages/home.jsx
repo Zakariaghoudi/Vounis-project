@@ -1,10 +1,9 @@
+import DashAdmin from "./dashAdmin";
 
 
 const Home =()=>{
     return(
         <div>
-
-            home page
         </div>
     )
 }

@@ -1,126 +1,144 @@
 :root {
-    --primary-color-v: #4CAF50;
-    --accepted-color: #4CAF50;
-    --rejected-color: #F44336;
-    --pending-color: #FFC107;
-    --completed-color: #9E9E9E;
+  --primary-color-v: #4caf50;
+  --accepted-color: #4caf50;
+  --rejected-color: #f44336;
+  --pending-color: #ffc107;
+  --completed-color: #9e9e9e;
 }
 
 .applications-container {
-    max-width: 1100px;
-    padding: 30px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: none;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(to bottom, #e0f2f1, #ffffff);
+  
 }
 
 .page-title {
-    color: #333;
-    border-bottom: 2px solid var(--primary-color-v);
-    padding-bottom: 10px;
-    margin-bottom: 5px;
+  color: #333;
+  border-bottom: 2px solid var(--primary-color-v);
+  padding-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .page-subtitle {
-    color: #666;
-    margin-bottom: 30px;
+  color: #666;
+  margin-bottom: 30px;
 }
 
 .filter-tabs {
-    display: flex;
-    gap: 10px;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
 }
 
 .tab-btn {
-    background: none;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    color: #666;
-    transition: all 0.2s;
+  background: none;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: #666;
+  transition: all 0.2s;
 }
 
 .tab-btn.active {
-    color: var(--primary-color-v);
-    border-bottom: 3px solid var(--primary-color-v);
+  color: var(--primary-color-v);
+  border-bottom: 3px solid var(--primary-color-v);
 }
 
 .applications-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .application-card {
-    display: flex;
-    justify-content: space-around;
-    width: 450px;
-    height: 200px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: transform 0.2s;
+  display: flex;
+  justify-content: space-around;
+  width: 450px;
+  height: 200px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
 }
 
 .application-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .project-title {
-    margin: 0 0 5px 0;
-    color: #333;
+  margin: 0 0 5px 0;
+  color: #333;
 }
 
 .host-name span {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .start-countdown {
-    color: var(--accepted-color);
-    font-weight: bold;
-    margin-top: 10px;
+  color: var(--accepted-color);
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 .card-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
 }
 
 .status-badge {
-    padding: 6px 15px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: bold;
-    color: white;
-    text-align: center;
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
 }
 
-.status-accepted { background-color: var(--accepted-color); }
-.status-rejected { background-color: var(--rejected-color); }
-.status-pending { background-color: var(--pending-color); color: #333; }
-.status-completed { background-color: var(--completed-color); }
+.status-accepted {
+  background-color: var(--accepted-color);
+}
+.status-rejected {
+  background-color: var(--rejected-color);
+}
+.status-pending {
+  background-color: var(--pending-color);
+  color: #333;
+}
+.status-completed {
+  background-color: var(--completed-color);
+}
 
-.details-btn, .cancel-btn {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s;
+.details-btn,
+.cancel-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
 }
 
 .details-btn {
-    background-color: #007bff;
-    color: white;
+  background-color: #007bff;
+  color: white;
 }
 
 .cancel-btn {
-    background-color: #f443361a;
-    color: var(--rejected-color);
-    border: 1px solid var(--rejected-color);
+  background-color: #f443361a;
+  color: var(--rejected-color);
+  border: 1px solid var(--rejected-color);
 }

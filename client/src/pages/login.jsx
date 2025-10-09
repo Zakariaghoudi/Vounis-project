@@ -9,50 +9,45 @@ const login = () => {
     email: "",
     password: "",
   });
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(userLogin(form));
+    navigate("/");
+  };
   return (
-    <form onSubmit={handleSubmit} className="wrapper">
-      <h2>Login</h2>
-      <div className="input-field">
-        <input
-          type="email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          required
-        />
-        <label>Enter your email</label>
-      </div>
-      <div className="input-field">
-        <input
-          type="password"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          required
-        />
-        <label>Enter your password</label>
-      </div>
+    <div className="page-register">
+      <form onSubmit={handleSubmit} className="register-form ">
+        <h2>Login</h2>
+        <div className="input-register">
+          <label>Enter your email</label>
+          <input
+            type="email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            required
+          />
+        </div>
+        <div className="input-register">
+          <label>Enter your password</label>
+          <input
+            type="password"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            required
+          />
+        </div>
 
-      <button
-        onClick={() => {
-          dispatch(userLogin(form));
-          setTimeout(() => {
-            navigate("/");
-          }, 1000);
-        }}
-      >
-        Login
-      </button>
-      <div className="register">
-        <p>
-          Don't have an account? <Link to="/register">Register Now</Link>
-        </p>
-      </div>
-    </form>
+        <button type="submit">Login</button>
+        <div className="register">
+          <p>
+            Don't have an account? <Link to="/register">Register Now</Link>
+          </p>
+        </div>
+      </form>
+    </div>
   );
 };
 

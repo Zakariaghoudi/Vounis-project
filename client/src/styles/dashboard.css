@@ -1,0 +1,229 @@
+:root {
+    --color-primary: #00bfa5;
+    --color-secondary: #e8f5e9;
+    --color-dark: #2c3e50;
+    --color-text: #333;
+    --color-light-gray: #f4f4f4;
+    --color-green: #4caf50;
+    --color-yellow: #ffc107;
+    --color-white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: var(--color-light-gray);
+    color: var(--color-text);
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 280px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-block {
+    padding: 0 20px 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-photo-placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--color-secondary);
+    margin-bottom: 10px;
+}
+
+.user-name {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.user-role {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.main-nav {
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: var(--color-white);
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.nav-item:hover, .nav-item.active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.nav-item i {
+    margin-right: 10px;
+}
+
+.action-buttons-container {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-button {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+.action-button:hover {
+    opacity: 0.9;
+}
+
+.logout-link {
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    color: var(--color-white);
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin-top: auto;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: var(--color-white);
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-light-gray);
+}
+
+.download-report-button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dashboard-content-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.metrics-row {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.metric-card {
+    flex: 1;
+    background-color: var(--color-light-gray);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 5px solid var(--metric-color, var(--color-primary));
+}
+
+.metric-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--metric-color, var(--color-primary));
+}
+
+.dashboard-section {
+    flex: 3;
+    background-color: var(--color-white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9em;
+}
+
+.list-item:last-of-type {
+    border-bottom: none;
+}
+
+.date-tag {
+    background-color: var(--color-secondary);
+    padding: 2px 8px;
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+.show-all-link {
+    display: block;
+    text-align: right;
+    color: var(--color-primary);
+    text-decoration: none;
+    padding-top: 10px;
+}
+
+.low-priority-card {
+    flex: 1;
+    background-color: var(--color-secondary);
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 250px;
+}
+
+.create-button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-weight: bold;
+}

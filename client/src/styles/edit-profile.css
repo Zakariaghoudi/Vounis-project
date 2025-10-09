@@ -1,82 +1,28 @@
 :root {
-  --primary-color: #4caf50;
+  --primary-color: var(--color-primary-green);
   --text-color: #333;
   --border-color: #ddd;
   --background-light: #f9f9f9;
 }
-main{
-  background-color:  #f9f9f9;
-}
 
 .profile-container {
+  margin: 0 auto;
   background-color: none;
-  width: 100%;
+  width: 60%;
   display: flex;
-}
-
-.page-title {
-  color: var(--text-color);
-  border-bottom: 2px solid var(--primary-color);
-  padding-bottom: 10px;
-  margin-bottom: 5px;
-}
-
-.page-subtitle {
-  color: #666;
-  margin-bottom: 30px;
-}
-
-.profile-header-card {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  margin-bottom: 40px;
-}
-
-.profile-avatar {
-  margin-left: 30px;
-  text-align: center;
-}
-
-.avatar-placeholder {
-  display: block;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: #eee;
-  border: 3px solid var(--primary-color);
-  margin-bottom: 10px;
-  line-height: 100px;
-  color: #999;
-  font-size: 14px;
-}
-
-.change-photo-btn {
-  background-color: var(--background-light);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  padding: 6px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: background-color 0.2s;
 }
 
 .profile-form {
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: space-around;
   width: 800px;
-  padding: 40px;
-  margin: 20px auto;
-  border: 2px solid #43a047;
+  margin: 40px auto;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(to bottom, #e0f2f1, #ffffff);
 }
-
 .form-group label {
   display: block;
   margin-bottom: 12px;
@@ -94,7 +40,6 @@ main{
   font-size: 15px;
 }
 
-
 .skill-tag {
   background-color: #e8f5e9;
   color: var(--primary-color);
@@ -107,6 +52,7 @@ main{
 .save-changes-btn {
   background-color: var(--primary-color);
   color: white;
+  margin-top: 20px;
   padding: 12px 30px;
   border: none;
   border-radius: 5px;
@@ -117,7 +63,7 @@ main{
 }
 
 .save-changes-btn:hover {
-  background-color: #43a047;
+  background-color: white;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
-
-
