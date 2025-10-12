@@ -8,7 +8,7 @@ export const userRegister = createAsyncThunk("/user/register", async (user) => {
       "http://localhost:5000/user/register",
       user
     );
-    return await response.data;
+    return  response.data;
   } catch (error) {
     console.log(error);
   }
@@ -18,7 +18,7 @@ export const userRegister = createAsyncThunk("/user/register", async (user) => {
 export const userLogin = createAsyncThunk("/user/login", async (user) => {
   try {
     const response = await axios.post("http://localhost:5000/user/login", user);
-    return await response.data;
+    return  response.data;
   } catch (error) {
     console.log(error);
   }
@@ -31,19 +31,32 @@ export const currentUser = createAsyncThunk(
       const response = await axios.get("http://localhost:5000/user/current", {
         headers: { Authorization: localStorage.getItem("token") },
       });
-      return await response.data;
+      return  response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data.error.message || error.message);
     }
   }
 );
+// verification account after register 
+export const userVerification = createAsyncThunk("/user/verify", async (user,{rejectWithValue}) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/user/verification",
+      user
+    );
+    return  response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data.message || error.message);
+  }
+});
+
 //get users
 export const getUser = createAsyncThunk(
   "/get/users",
   async () => {
     try {
       const response = await axios.get("http://localhost:5000/user");
-      return await response.data;
+      return  response.data.users;
     } catch (error) {
       console.log(error)
     }
@@ -54,7 +67,7 @@ export const getUser = createAsyncThunk(
 export const editUser = createAsyncThunk("/edit/user", async ({id, editProfil}) => {  
   try {
     const response = await axios.put(`http://localhost:5000/user/${id}`, editProfil);
-    return await response.data;
+    return  response.data;
   } catch (error) {
     console.log(error);
   }
@@ -97,7 +110,6 @@ export const userSlice = createSlice({
     builder.addCase(userRegister.fulfilled, (state, action) => {
       state.status = "fulfilled";
       state.user = action.payload.user;
-      localStorage.setItem("token", action.payload.token);
     });
     builder.addCase(userRegister.rejected, (state, action) => {
       state.status = "failed";
@@ -110,10 +122,24 @@ export const userSlice = createSlice({
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.user = action.payload;
+      state.user = action.payload.user;
       localStorage.setItem("token", action.payload.token);
     });
     builder.addCase(userLogin.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    });
+     builder.addCase(userVerification.pending, (state) => {
+      state.status = "pending";
+      state.error = null
+    });
+    builder.addCase(userVerification.fulfilled, (state, action) => {
+      state.status = "fulfilled";
+      state.user = action.payload?.user;
+     localStorage.setItem("token", action.payload?.token);
+
+    });
+    builder.addCase(userVerification.rejected, (state, action) => {
       state.status = "failed";
       state.error = action.payload;
     });

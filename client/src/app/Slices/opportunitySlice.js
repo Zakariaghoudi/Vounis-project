@@ -18,7 +18,7 @@ export const addOpportunity = createAsyncThunk("/opportunity/add", async () =>{
 export const getOpportunity = createAsyncThunk("/opportunity/get", async () =>{
   try {
     const response = await axios.get("http://localhost:5000/opportunities");
-    return await response.data;
+    return await response.data.opportunities;
   } catch (error) {
     console.log(error);
   }

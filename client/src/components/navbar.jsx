@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  logout } from "../app/Slices/userSlice";
+import { logout } from "../app/Slices/userSlice";
 import { FaBars, FaTimes } from "react-icons/fa";
 const Navbar = () => {
   //---- state form toggle menu----
@@ -14,7 +14,9 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
-  console.log(user?.role);
+  const userRole = user?.role
+  console.log(userRole);
+  
   return (
     <div className="header">
       <Link to={"/"}>
@@ -41,12 +43,15 @@ const Navbar = () => {
           {isAuth ? (
             <>
               <button className="btn-profil">
-                <Link className="link-profil"
+                <Link
+                  className="link-profil"
                   to={
-                    user?.role === "volunteer"
+                    userRole === "volunteer"
                       ? "/profil-volunteer"
-                      : user?.role === "host" ? "/profil-host"
-                      : user?.role === "admin" ? "/profil-admin"
+                      : userRole === "host"
+                      ? "/profil-host"
+                      : userRole === "admin"
+                      ? "/profil-admin"
                       : "/"
                   }
                 >

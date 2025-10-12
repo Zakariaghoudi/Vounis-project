@@ -1,0 +1,50 @@
+.home {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: center;
+  margin: 0 auto;
+}
+.section-home {
+  font-family: "Times New Roman", Times, serif;
+  max-width: 700px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-evenly;
+  margin-left: 30px;
+}
+.home-title {
+  font-weight: 600;
+  font-size: 2.5rem;
+  color: #888585;
+}
+.home-description {
+  margin-bottom: 20px;
+
+  color: #b1a5a5;
+  font-size: 23px;
+}
+.links-home{
+    display: flex;
+    gap: 20px;
+    border: none;
+    font-size: 20px;
+    margin-bottom:30px;
+}
+.link-support {
+    color: white;
+    border: 2px solid gold;
+    padding: 10px 25px;
+    border-radius: 10px;
+}
+.link-discover{
+        background-color: gold;
+        color: rgb(27, 26, 26);
+        border-radius: 10px;
+        padding: 10px 25px;
+    }
+

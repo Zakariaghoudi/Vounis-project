@@ -1,24 +1,30 @@
-import { useEffect } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
-import { getOpportunity } from "../app/Slices/opportunitySlice";
-
+import { useSelector } from "react-redux";
+import "../styles/discover.css"
 function Discover() {
-  const dispatch = useDispatch();
-  const opportunity = useSelector(
-    (state) => state.opportunity.opportunity
+  const opportunities = useSelector((state) => state.opportunity.opportunity);
+  console.log(opportunities);
+
+  return (
+    <div className="discover-page">
+      <h1>Available Opportunities</h1>
+
+      {opportunities && opportunities.length > 0 ? (
+        <div className="opp-container">
+          {opportunities.map((opportunity) => (
+            <div key={opportunity?._id} className="opp-card">
+              <span>Title:<h4>{opportunity?.title}</h4></span>
+              <span>Description: {opportunity?.description}</span>
+              <span>Location: {opportunity?.location}</span>
+              <span>Skills required: {opportunity?.skills}</span>
+              <span>Status: {opportunity?.status}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>No opportunities available.</p>
+      )}
+    </div>
   );
-  console.log(opportunity);
+}
 
-  useEffect(() => {
-    dispatch(getOpportunity());
-  }, []);
-  //const items = opportunity.map((item) => {
-    return (
-   <div>
-
-   </div> 
-    );
-  };
-  
 export default Discover;

@@ -7,6 +7,7 @@ const {
   registerUser,
   loginUser,
   currentUser,
+  OtpVerify,
 } = require("../controllers/authController");
 
 const {
@@ -20,10 +21,10 @@ const {
 router.post("/register", registerRules(), validate, registerUser);
 // login the user
 router.post("/login", loginRules(), validate, loginUser);
-
+//verification current useer
+router.post("/verification", OtpVerify)
 // get cuurent user
 router.get("/current", isAuth(), currentUser);
-
 // get all users
 router.get("/", async (req, res) => {
   try {

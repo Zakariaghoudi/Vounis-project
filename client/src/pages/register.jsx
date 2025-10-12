@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { userRegister } from "../app/Slices/userSlice";
+import { toast } from "react-toastify";
 
 function Register() {
   const [form, setForm] = useState({
@@ -10,66 +11,66 @@ function Register() {
     lastName: "",
     email: "",
     password: "",
-    role: "volunteer"
+    role: "volunteer",
   });
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(userRegister(form));
-    navigate("/")
+    await dispatch(userRegister(form));
+    navigate("/verification");
   };
   const dispatch = useDispatch();
-  const handleRoleChange=(e)=> {
-    const {checked} = e.target;
-    const newRole= checked ? "host" : "volunteer";
+  const handleRoleChange = (e) => {
+    const { checked } = e.target;
+    const newRole = checked ? "host" : "volunteer";
     setForm({
-      ...form, 
+      ...form,
       role: newRole,
     });
   };
   const navigate = useNavigate();
   return (
     <register className="page-register">
-    <form className="register-form" onSubmit={handleSubmit}>
-      <h2>Resgister Now</h2>
-      <div className="name-lastname">
-      <div className="input-register">
-        <label>Name</label>
-        <input
-          type="text"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          required
-        />
-      </div>
-      <div className="input-register">
-        <label>Last Name</label>
-        <input
-          type="text"
-          value={form.lastName}
-          onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-          required
-        />
-      </div>
-      </div>
-      <div className="input-register">
-        <label>Enter your email</label>
-        <input
-          type="email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          required
-        />
-      </div>
-      <div className="input-register">
-        <label>Enter your password</label>
-        <input
-          type="password"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          required
-        />
+      <form className="register-form" onSubmit={handleSubmit}>
+        <h2>Resgister Now</h2>
+        <div className="name-lastname">
+          <div className="input-register">
+            <label>Name</label>
+            <input
+              type="text"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              required
+            />
           </div>
-        
+          <div className="input-register">
+            <label>Last Name</label>
+            <input
+              type="text"
+              value={form.lastName}
+              onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+              required
+            />
+          </div>
+        </div>
+        <div className="input-register">
+          <label>Enter your email</label>
+          <input
+            type="email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            required
+          />
+        </div>
+        <div className="input-register">
+          <label>Enter your password</label>
+          <input
+            type="password"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            required
+          />
+        </div>
+
         <div className="inputField">
           <input
             type="checkbox"
@@ -78,19 +79,15 @@ function Register() {
             onChange={handleRoleChange}
           />
           <label>Are you a Host ? </label>
-      </div>
+        </div>
 
-      <button 
-      type="submit"
-        >
-        Register
-      </button>
-      <div className="register">
-        <p>
-          You have an account? <Link to="/login">Login</Link>
-        </p>
-      </div>
-    </form>
+        <button type="submit">Register</button>
+        <div className="register">
+          <p>
+            You have an account? <Link to="/login">Login</Link>
+          </p>
+        </div>
+      </form>
     </register>
   );
 }

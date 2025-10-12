@@ -20,7 +20,7 @@ const App = () => {
     <>
       <div className="contact-container">
         <div className="content-wrapper">
-          {/* Header Section - Title and Description */}
+
           <header className="header-contact">
           <h1 className="header-title">Contact Us</h1>
             <p className="header-description">
@@ -29,35 +29,36 @@ const App = () => {
             </p>
           </header>
 
-          {/* Main Content Section: Contact Info + Form */}
           <main className="main-grid">
-            {/* Left Column: Quick Contact Information */}
             <div className="info-section">
               <h2 className="info-header">Contact Information</h2>
                <div className="info-card">
-               <Mail 
-               size={60}
+               <Mail  color=" #6cbea1"
+               size={50}
               />
-                <h4>vounis@gmail.com</h4>
-              <Phone
-                size={60}
+                <h4>vounis.center@gmail.com</h4>
+              <Phone  color=" #6cbea1"
+                size={50}
               />
               <h4>+216 70 000 000</h4>
 
-              <MapPin size={60} color="#048335ff"
+              <MapPin size={50} color=" #6cbea1"
                   />
                 <h4>Gabes, Tunis</h4>
                 </div>
               {/* Social Media Icons */}
               <div className="social-icons">
                 <a href="#" className="social-icon">
-                  <Facebook size={24} />
+                  <Facebook size={24} 
+                  color=" #6cbea1"/>
                 </a>
                 <a href="#" className="social-icon">
-                  <Twitter size={24} />
+                  <Twitter size={24} 
+                  color=" #6cbea1"/>
                 </a>
                 <a href="#" className="social-icon">
-                  <Linkedin size={24} />
+                  <Linkedin size={24} 
+                  color=" #6cbea1"/>
                 </a>
               </div>
             </div>

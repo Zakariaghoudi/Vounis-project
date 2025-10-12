@@ -34,6 +34,12 @@ const userSchema = new schema(
       default: "volunteer",
     },
     isAdmin: { type: Boolean, default: false },
+    otp: String,
+    expiresOtp: Date,
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
