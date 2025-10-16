@@ -24,4 +24,3 @@ dist-ssr
 #depedencies
 node_modules
 .env
-config/
