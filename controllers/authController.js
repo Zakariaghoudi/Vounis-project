@@ -1,7 +1,7 @@
 const User = require("../models/usersModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const transporter = require("../config/email");
+const transporter = require("../config/email.js");
 exports.registerUser = async (req, res) => {
   const {
     name,
@@ -18,7 +18,7 @@ exports.registerUser = async (req, res) => {
     // check if email already exist
     const checkUser = await User.findOne({ email });
     if (checkUser) {
-      return res.status(400).send({ message: "email already exist" });
+      return res.status(400).send({ message: "email already exist"});
     }
 
     // create new user
@@ -197,9 +197,7 @@ exports.registerUser = async (req, res) => {
     });
     // save the new user
     await newUser.save();
-    res
-      .status(201)
-      .send(newUser,  "Please verify your account" );
+    res.status(201).send(newUser, "Please verify your account");
   } catch (error) {
     console.log(error);
     res
@@ -291,5 +289,5 @@ exports.OtpVerify = async (req, res) => {
 
 // get cuurent user
 exports.currentUser = async (req, res) => {
-  res.status(201).send( {user : req.user} );
+  res.status(201).send({ user: req.user });
 };
