@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <div className="header">
       <Link to={"/"}>
-        <img src="./public/logo.png" />
+        <img src="https://raw.githubusercontent.com/Zakariaghoudi/Vounis-project/refs/heads/master/client/public/logo.png" />
       </Link>
       <div className="menuOpen" onClick={toggleMenu}>
         {openMenu ? <FaTimes /> : <FaBars />}
