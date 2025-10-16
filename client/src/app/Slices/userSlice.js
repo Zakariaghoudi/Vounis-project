@@ -42,7 +42,7 @@ export const currentUser = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data.message ||error.message);
+      return rejectWithValue(error.response?.data.message || error.message);
     }
   }
 );
@@ -177,7 +177,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.userList = action.payload?.users || [];
+      state.userList = action.payload || [];
     });
     builder.addCase(getUser.rejected, (state, action) => {
       state.status = "failed";

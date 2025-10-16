@@ -68,7 +68,7 @@ export const applicationSlice = createSlice({
     });
     builder.addCase(addApplication.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.application = action.payload;
+      state.application.push(action.payload);
     });
     builder.addCase(addApplication.rejected, (state) => {
       state.status = "failed";

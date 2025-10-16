@@ -82,8 +82,15 @@
   border-radius: 8px;
   cursor: pointer;
   &&:hover {
-     background: white;
+  background: white;
   color: rgba(177, 9, 9, 0.822);
   border: 1px solid rgba(177, 9, 9, 0.822);
+  }
+}
+/*responsive */
+@media (max-width:840px) {
+  .profile-dashboard{
+    display:flex;
+    flex-wrap: wrap;
   }
 }

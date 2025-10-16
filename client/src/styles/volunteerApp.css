@@ -156,3 +156,15 @@
   color: var(--rejected-color);
   border: 1px solid var(--rejected-color);
 }
+@media (max-width :840px) {
+  .filter-tabs{
+  display: flex;
+  flex-wrap: wrap;
+  }
+  .application-card.card-grid{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    height:100%;
+  }
+}

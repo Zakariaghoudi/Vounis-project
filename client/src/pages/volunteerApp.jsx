@@ -8,9 +8,13 @@ const VolunteerApplications = () => {
     const dispatch = useDispatch();
 
     // Select ALL necessary data from the store
-    const user = useSelector((s) => s.user.userList);
+    const user = useSelector((s) => s.user.user);
     const allApplications = useSelector((s) => s.application.application );
     const allOpportunities = useSelector((s) => s.opportunity.opportunity );
+console.log("the user is:",user);
+console.log("all applications are:",allApplications);
+console.log("all opportunities are:",allOpportunities);
+
 
     // Filter keys must match database status values (lowercase)
     const [filter, setFilter] = useState("all");

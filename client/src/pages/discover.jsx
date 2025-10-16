@@ -11,14 +11,14 @@ function Discover() {
   const navigate = useNavigate();
   // Selectors
   const opportunities = useSelector((state) => state.opportunity.opportunity);
-  console.log(opportunities);
+  // console.log(opportunities);
   const applications = useSelector((state) => state.application.application);
-  console.log(applications);
+  // console.log(applications);
 
   const user = useSelector((state) => state.user.user);
-
+  const userRole = user?.role
   const volunteerId = user?._id;
-
+  
   //Local State for Search and Filtering
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredOpportunities, setFilteredOpportunities] = useState([]);
@@ -43,7 +43,7 @@ function Discover() {
   }, [searchTerm, opportunities]);
 
   const hasApplied = (opportunityId) => {
-    if (!applications || !volunteerId) return false;
+    if (!Array.isArray(applications)|| !volunteerId) return false;
 
     return applications.some(
       (app) =>
@@ -51,8 +51,10 @@ function Discover() {
     );
   };
   const handleApply = (opportunityId) => {
-    if (!volunteerId) {
-      alert("Please log in to apply for this opportunity.");
+    if (!volunteerId ) {
+      alert("Please log in to apply for this opportunity");
+    }else if (userRole !=="volunteer"){
+      alert("Your not eligible to apply ")
       return;
     }
 
