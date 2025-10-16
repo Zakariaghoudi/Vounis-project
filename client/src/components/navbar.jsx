@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../app/Slices/userSlice";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -15,7 +15,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
   const userRole = user?.role
-  console.log(userRole);
+  
   
   return (
     <div className="header">
@@ -48,11 +48,10 @@ const Navbar = () => {
                   to={
                     userRole === "volunteer"
                       ? "/profil-volunteer"
-                      : userRole === "host"
-                      ? "/profil-host"
-                      : userRole === "admin"
-                      ? "/profil-admin"
-                      : "/"
+                      :userRole==="host"?
+                       "/profil-host"
+                       : userRole==="admin"  ? "/profil-admin":
+                        "/"
                   }
                 >
                   Profil

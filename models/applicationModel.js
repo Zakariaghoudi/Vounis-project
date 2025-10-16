@@ -8,7 +8,8 @@ const applicationSchema = new schema(
     id_opportunity: String,
     status: {
       type: String,
-      enum: ["accepted", "rejected"],
+      enum: ["pending", "accepted", "rejected"],
+      default : "pending",
     },
   },
   {

@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../app/Slices/userSlice";
 import "../styles/profilHeader.css";
 
-const profileHeader = ({ handleClickEdit}) => {
+const ProfileHeader = ({ handleClickEdit }) => {
   const person = useSelector((state) => state.user.user);
+  const role = person?.role;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
   return (
-    <contact>
+    <div className="contact">
       <div className="left-section">
         <div className="info">
         <img src={person?.profilePhoto} className="photo-profil" />
@@ -23,9 +24,11 @@ const profileHeader = ({ handleClickEdit}) => {
 
         </div>
         <div className="btns">
-          <button className="edit-btn" onClick={handleClickEdit}>
-            Edit Profil
-          </button>
+          {role === "volunteer" ? (
+            <button className="edit-btn" onClick={handleClickEdit}>
+              Edit Profil
+            </button>
+          ) : null}
         <button
           onClick={() => {
             dispatch(logout());
@@ -37,8 +40,8 @@ const profileHeader = ({ handleClickEdit}) => {
         </button>
         </div>
       </div>
-    </contact>
+    </div>
   );
 };
 
-export default profileHeader;
+export default ProfileHeader;

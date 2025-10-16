@@ -1,31 +1,372 @@
-import EditProfile from "../components/editProfile";
-import ProfileHeader from "../components/profileHeader";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "../styles/dashAdmin.css";
 
+// thunks for users
+import { getUser, editUser, deleteUser } from "../app/Slices/userSlice";
+// thunks for opportunities
+import {
+  getOpportunity,
+  updateOpportunity,
+  deleteOpportunity,
+} from "../app/Slices/opportunitySlice";
+
+/**
+ * DashAdmin - Enhanced Admin Panel (Edit/Delete Only)
+ * Manages existing users (Edit/Delete) and opportunities (Edit/Delete).
+ */
 const DashAdmin = () => {
+  const dispatch = useDispatch();
+
+  // Redux Selectors
+  const users = useSelector((state) => state.user.userList || []);
+  const opportunities = useSelector(
+    (state) => state.opportunity.opportunity || []
+  );
+
+  // const usersMap = users.reduce((acc, user)=>{
+  //   const userId = user._id
+  //   acc[userId] = user
+  //   return acc;
+  // },{});
+  // const oppWithHost = opportunities.map((opportunity)=>{
+  //   const publisherId = opportunity?.id_host
+  //   const publisher =usersMap[publisherId];
+  //   const publisherName = publisher ? publisher?.name : 'User Unknow';
+  //   return {
+  //     ...opportunity, publisherName :  publisherName
+  //   }
+  // })
+  // State for User Management (Includes role and verified)
+
+  const [editingUserId, setEditingUserId] = useState(null);
+  const [userForm, setUserForm] = useState({
+    name: "",
+    email: "",
+    role: "user", // Default role
+    verified: "false", // Default verified status (using string for select value)
+  });
+
+  // State for Opportunity Management (Includes status)
+  const [oppForm, setOppForm] = useState({
+    title: "",
+    location: "",
+    description: "",
+    status: "Open", // Default status
+  });
+  const [editingOppId, setEditingOppId] = useState(null);
+
+  // Load lists on mount
+  useEffect(() => {
+    dispatch(getUser());
+    dispatch(getOpportunity());
+  }, [dispatch]);
+
+  // -------- General Handlers --------
+  const handleUserFormChange = (e) =>
+    setUserForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+
+  const handleOppFormChange = (e) =>
+    setOppForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+
+  // Helper to re-fetch lists after mutation
+  const refreshData = () => {
+    dispatch(getUser());
+    dispatch(getOpportunity());
+  };
+
+  // -------- Users Handlers (Edit, Delete) --------
+
+  const startEditUser = (u) => {
+    setEditingUserId(u._id);
+    // Populate form with existing data, handling null/undefined values
+    setUserForm({
+      name: u.name || "",
+      email: u.email || "",
+      role: u.role || "user", // Default to 'user' if not set
+      verified: u.verified ? "true" : "false", // Convert boolean to string
+    });
+  };
+
+  const saveUser = async (id) => {
+    try {
+      // Prepare data for thunk, converting string 'verified' back to boolean if necessary
+      const userPayload = {
+        ...userForm,
+        verified: userForm.verified === "true",
+      };
+
+      await dispatch(editUser({ id, editProfil: userPayload }));
+      setEditingUserId(null);
+      setUserForm({ name: "", email: "", role: "user", verified: "false" });
+      refreshData();
+    } catch (err) {
+      console.error("Error saving user:", err);
+    }
+  };
+
+  const cancelUserAction = () => {
+    setEditingUserId(null);
+    setUserForm({ name: "", email: "", role: "user", verified: "false" });
+  };
+
+  const removeUser = async (id) => {
+    if (!window.confirm("Delete this user?")) return;
+    try {
+      await dispatch(deleteUser(id));
+      refreshData();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // -------- Opportunities Handlers (Edit, Delete) --------
+  const startEditOpp = (o) => {
+    setEditingOppId(o._id);
+    setOppForm({
+      title: o.title || "",
+      location: o.location || "",
+      description: o.description || "",
+      status: o.status || "Open", // Default to 'Open' if not set
+    });
+  };
+
+  const saveOpp = async (id) => {
+    try {
+      await dispatch(updateOpportunity({ id, editOpportunity: oppForm }));
+      setEditingOppId(null);
+      setOppForm({ title: "", location: "", description: "", status: "Open" });
+      refreshData();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const cancelOppEdit = () => {
+    setEditingOppId(null);
+    setOppForm({ title: "", location: "", description: "", status: "Open" });
+  };
+
+  const removeOpp = async (id) => {
+    if (!window.confirm("Delete this opportunity?")) return;
+    try {
+      await dispatch(deleteOpportunity(id));
+      refreshData();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Helper to determine status class
+  const getStatusClass = (status) => {
+    if (!status) return "status-default";
+    const lowerStatus = status.toLowerCase();
+    if (lowerStatus.includes("open")) return "status-open";
+    if (lowerStatus.includes("closed") || lowerStatus.includes("completed"))
+      return "status-closed";
+    return "status-default";
+  };
+
   return (
-    <section className="dash-admin">
-      <div className="dash-container">
-        <ProfileHeader />
-        <EditProfile />
-      </div>
-      <div className="section-dash">
-        <div className="users">
-          <div className="stat-value">
-            <span>2</span>
-          <div className="stat-label">Users</div>
+    <div className="admin-root">
+      <header className="admin-header">
+        <h1>Admin Dashboard</h1>
+        <p className="muted">Manage users and opportunities</p>
+      </header>
+
+      <main className="admin-grid">
+        {/* Users column */}
+        <section className="card">
+          <h2>Users</h2>
+
+          {/* User List */}
+          <div className="list">
+            {users.length === 0 && <div className="empty">No users found.</div>}
+            {users.map((u) => (
+              <div key={u._id} className="list-item">
+                {editingUserId === u._id ? (
+                  // User Edit Form (Expanded)
+                  <div className="user-edit-form expanded-form">
+                    <input
+                      name="name"
+                      value={userForm.name}
+                      onChange={handleUserFormChange}
+                      placeholder="Full Name"
+                      required
+                    />
+                    <input
+                      name="email"
+                      type="email"
+                      value={userForm.email}
+                      onChange={handleUserFormChange}
+                      placeholder="Email Address"
+                      required
+                    />
+
+                    <select
+                      name="role"
+                      value={userForm.role}
+                      onChange={handleUserFormChange}
+                    >
+                      <option value="admin">Admin</option>
+                      <option value="host">host</option>
+                      <option value="volunteer">volunteer</option>
+                    </select>
+
+                    <select
+                      name="verified"
+                      value={userForm.verified}
+                      onChange={handleUserFormChange}
+                    >
+                      <option value="true">Verified</option>
+                      <option value="false">Unverified</option>
+                    </select>
+
+                    <div className="inline-actions">
+                      <button
+                        className="btn primary"
+                        onClick={() => saveUser(u._id)}
+                      >
+                        Save
+                      </button>
+                      <button
+                        className="btn secondary"
+                        type="button"
+                        onClick={cancelUserAction}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  // User Display Mode (Expanded)
+                  <>
+                    <div className="user-details">
+                      <strong>{u.name}</strong>
+                      <div className="user-metadata">
+                        <span className="muted small">{u.email}</span>
+                        <span
+                          className={`user-role user-role-${u.role || "user"}`}
+                        >
+                          {u.role || "user"}
+                        </span>
+                        <span
+                          className={`user-verified user-verified-${
+                            u.isVerified ? "true" : "false"
+                          }`}
+                        >
+                          {u.isVerified ? "Verified" : "Unverified"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="actions">
+                      <button
+                        className="btn action-edit"
+                        onClick={() => startEditUser(u)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn danger"
+                        onClick={() => removeUser(u._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
           </div>
-          <button className="btn primary">View all users</button>
-        </div>
-        <div className="opportunities">
-          <div className="stat-value">
-            <span>3</span>
-          <div className="stat-label">Opportunities</div>
+        </section>
+
+        <section className="card">
+          <h2>Opportunities</h2>
+
+          <div className="list">
+            {opportunities.length === 0 && (
+              <div className="empty">No opportunities found.</div>
+            )}
+            {opportunities.map((o) => (
+              <div key={o._id} className="list-item">
+                {editingOppId === o._id ? (
+                  <div className="opp-edit-form expanded-form">
+                    <input
+                      name="title"
+                      value={oppForm.title}
+                      onChange={handleOppFormChange}
+                      placeholder="Title"
+                    />
+                    <input
+                      name="location"
+                      value={oppForm.location}
+                      onChange={handleOppFormChange}
+                      placeholder="Location"
+                    />
+                    <textarea
+                      name="description"
+                      value={oppForm.description || ""}
+                      onChange={handleOppFormChange}
+                      placeholder="Description"
+                      rows={2}
+                    />
+
+                    <select
+                      name="status"
+                      value={oppForm.status}
+                      onChange={handleOppFormChange}
+                    >
+                      <option value="Open">Open</option>
+                      <option value="Closed">Closed</option>
+                    </select>
+
+                    <div className="inline-actions">
+                      <button
+                        className="btn primary"
+                        onClick={() => saveOpp(o._id)}
+                      >
+                        Save
+                      </button>
+                      <button className="btn secondary" onClick={cancelOppEdit}>
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="opp-details">
+                      <strong>{o.title}</strong>
+                      <div className="opp-metadata">
+                        <span className="muted small">{o.location}</span> <br />
+                        <span
+                          className={`opp-status ${getStatusClass(o.status)}`}
+                        >
+                          {o.status || "N/A"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="actions">
+                      <button
+                        className="btn action-edit"
+                        onClick={() => startEditOpp(o)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn danger"
+                        onClick={() => removeOpp(o._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
           </div>
-          <button className="btn outline">View opportunities</button>
-        </div>
-      </div>
-    </section>
+        </section>
+      </main>
+    </div>
   );
 };
 

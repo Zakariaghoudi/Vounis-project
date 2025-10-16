@@ -16,7 +16,6 @@
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
   background: linear-gradient(to bottom, #e0f2f1, #ffffff);
-  
 }
 
 .page-title {
@@ -52,6 +51,21 @@
 .tab-btn.active {
   color: var(--primary-color-v);
   border-bottom: 3px solid var(--primary-color-v);
+}
+
+/* Map app statuses to badge styles used in JSX: status-pending/status-accepted/status-rejected/status-completed */
+.status-pending {
+  background-color: var(--pending-color);
+  color: #333;
+}
+.status-accepted {
+  background-color: var(--accepted-color);
+}
+.status-rejected {
+  background-color: var(--rejected-color);
+}
+.status-completed {
+  background-color: var(--completed-color);
 }
 
 .applications-list {

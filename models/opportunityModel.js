@@ -13,6 +13,7 @@ const opportunitySchema = new schema(
       enum: ['closed' , 'open'],
       default: "open",
     },
+    image: String,
     title: {
        type: String,
         require: true },

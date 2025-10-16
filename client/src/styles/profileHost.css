@@ -1,24 +1,26 @@
-
-main{
-    background-color: #f9f9f9;
-    width: 100%;
-    min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-
+main {
+  background-color: #f9f9f9;
+  width: 100%;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
 }
 
 .host-section-content {
-    width: 900px;
-    margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
   padding: 40px 20px;
-  background-color: #ffffff;
+  background-color:none;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .host-section-title {
-  color: #4caf50;
+  color: #12c72b6e;
   border-bottom: 2px solid #eee;
   padding-bottom: 10px;
   margin-bottom: 25px;
@@ -113,4 +115,128 @@ main{
 
 .btn-view-calendar:hover {
   background-color: #d6d6d6;
+}
+
+/* Host dashboard panels and form */
+.panel {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  width: 90%;
+  height: 500px;
+}
+.host-panel.panel {
+  overflow-y: scroll;
+}
+
+.host-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+ 
+}
+
+.host-form input,
+.host-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e6e6e6;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #333;
+  background: #fafafa;
+}
+
+.host-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.host-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* Buttons */
+.btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn:hover {
+  filter: brightness(0.98);
+}
+.btn.primary {
+  background: #4caf50;
+  color: #fff;
+  border-color: #4caf50;
+}
+.btn.danger {
+  background: #fff;
+  color: #d32f2f;
+  border-color: #f0b9b9;
+}
+
+.meta {
+  color: #777;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+.empty {
+  color: #777;
+  padding: 14px 8px;
+}
+
+/* Opportunity card */
+.host-opp-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+  margin-bottom: 10px;
+  background: #fff;
+}
+.host-opp-card strong {
+  font-size: 1rem;
+}
+.host-opp-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Application card */
+.application-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+  margin-bottom: 10px;
+  background: #fff;
+}
+.application-card .meta {
+  margin-top: 6px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  main {
+    flex-direction: column;
+  }
+  .host-section-content {
+    width: calc(100% - 32px);
+    margin: 16px;
+    padding: 20px;
+  }
 }

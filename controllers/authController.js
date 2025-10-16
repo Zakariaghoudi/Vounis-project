@@ -50,14 +50,14 @@ exports.registerUser = async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: newUser.email,
-      subject: "Vounis - Verfication Code-",
+      subject: "Verfication Code",
       html: `
          <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Verification Code</title>
+    <title>Verification Code</title>
     <style type="text/css">
         body {
             margin: 0;
@@ -112,19 +112,24 @@ exports.registerUser = async (req, res) => {
         <div style="max-width: 600px; margin: 0 auto;">
 
             <!-- Preheader text (appears in inbox preview) -->
-            <div style="font-size: 0px; color: #f4f4f4; opacity: 0; visibility: hidden; width: 0px; height: 0px; display: none;">
+            <div style="font-size: 0px; color: #f4f4f4; opacity: 0; visibility: hidden; width: 0px; 
+            height: 0px; display: none;">
                 Your verification code is here! Use it to complete your action.
             </div>
 
             <!-- Email Wrapper Table -->
-            <table class="full-width-table" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width: 100%; max-width: 600px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 20px; margin-bottom: 20px;">
+            <table class="full-width-table" align="center" border="0" cellpadding="0"
+             cellspacing="0" role="presentation" style="width: 100%; max-width: 600px; 
+            background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            margin-top: 20px; margin-bottom: 20px;">
                 <tr>
                     <td class="content-padding" style="padding: 40px 30px 40px 30px;">
                         <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width: 100%;">
                             <tr>
                                 <td style="padding-bottom: 20px; text-align: center;">
-                                     <img src="../client/public/logo.png" alt="Vounis" width="150" style="display: block; border: 0;" />
-                                    <span style="font-size: 28px; font-weight: bold; color: #007bff;">YourApp</span>
+                                     <img src="https://raw.githubusercontent.com/Zakariaghoudi/Vounis-project/refs/heads/master/client/public/logo.png"
+                                      alt="Vounis" width="150" style="display: block; border: 0;" />
+                                    <span style="font-size: 28px; font-weight: bold; color: #29b668ff;">Vounis</span>
                                 </td>
                             </tr>
 
@@ -138,7 +143,7 @@ exports.registerUser = async (req, res) => {
                             <!-- Main Content -->
                             <tr>
                                 <td style="padding-bottom: 20px; text-align: center; font-size: 16px; line-height: 24px; color: #555555;">
-                                    <p style="margin: 0;">Hi ${this.currentUser.name},</p>
+                                    <p style="margin: 0;">Hi ${newUser.name},</p>
                                     <p style="margin: 15px 0 0;">You recently requested a verification code to complete your action. Please use the following code:</p>
                                 </td>
                             </tr>
@@ -162,7 +167,7 @@ exports.registerUser = async (req, res) => {
                             <tr>
                                 <td style="padding-bottom: 30px; text-align: center;">
                                     <a href="#" class="button" target="_blank" 
-                                    style="background-color: #007bff; color: #ffffff; padding: 12px 25px;
+                                    style="background-color: #40d48aff; color: #ffffff; padding: 12px 25px;
                                      border-radius: 5px; display: inline-block; font-size: 18px; font-weight: bold;
                                       text-decoration: none;">
                                         Verify Now
@@ -194,7 +199,7 @@ exports.registerUser = async (req, res) => {
     await newUser.save();
     res
       .status(201)
-      .send({ user: newUser, message: "Please verify your account" });
+      .send(newUser,  "Please verify your account" );
   } catch (error) {
     console.log(error);
     res
@@ -208,30 +213,31 @@ exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     // check if email already exist
-    const searchdUser = await User.findOne({ email });
-    if (!searchdUser) {
-      return res.status(401).send({ msg: "Bad credentials" });
+    const currentuser = await User.findOne({ email });
+    console.log(currentuser);
+    if (!currentuser) {
+      return res.status(401).send({ msg: "You don't have an account!" });
     }
-    if (!searchdUser.isVerified) {
+    if (!currentuser.isVerified) {
       return res
         .status(403)
         .send({ msg: "Account not verifid, please check your email" });
     }
     // compare the password with hash pswrd
-    const isMatch = await bcrypt.compare(password, searchdUser.password);
+    const isMatch = await bcrypt.compare(password, currentuser.password);
     if (!isMatch) {
-      return res.status(401).send({ msg: "Bad credentials" });
+      return res.status(401).send({ msg: " incorrect email or password" });
     }
     // generate token
     const payload = {
-      _id: searchdUser._id,
-      role: searchdUser.role,
+      _id: currentuser._id,
+      role: currentuser.role,
     };
     const token = jwt.sign(payload, process.env.SECRETKEY, {
-      expiresIn: "4h",
+      expiresIn: "24d",
     });
     return res.status(200).send({
-      user: searchdUser,
+      user: currentuser,
       msg: "Logged in Successfully",
       token: `Bearer ${token}`,
     });
@@ -271,7 +277,7 @@ exports.OtpVerify = async (req, res) => {
       _id: user._id,
     };
     const token = jwt.sign(payload, process.env.SECRETKEY, {
-      expiresIn: "4h",
+      expiresIn: "24d",
     });
     res.status(201).send({
       user: user,
@@ -285,5 +291,5 @@ exports.OtpVerify = async (req, res) => {
 
 // get cuurent user
 exports.currentUser = async (req, res) => {
-  res.status(201).send({ user: req.user });
+  res.status(201).send( {user : req.user} );
 };

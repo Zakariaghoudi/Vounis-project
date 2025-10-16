@@ -1,86 +1,292 @@
+/*
+ * File: ../styles/dashAdmin.css
+ * Perfected, Responsive Design for Admin Dashboard (Edit/Delete Focus)
+ */
+
+/* === Variables and Global Reset === */
 :root {
-  --dash-bg: #f6f8fb;
+  --primary-color: #12b46885; /* Google-style Blue for primary actions/focus */
+  --secondary-color: #6c757d; /* Gray for secondary actions */
+  --danger-color: #d93025; /* Red for delete/destructive actions */
+  --bg-color: #f1f3f4; /* Subtle off-white background */
   --card-bg: #ffffff;
-  --muted: #6b7280;
-  --primary: #0ea5a4; /* teal */
-  --accent: #06b6d4;
-  --glass: rgba(255, 255, 255, 0.7);
-  --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --text-color: #202124;
+  --muted-color: #70757a;
+  --border-color: #dadce0;
+  --shadow-subtle: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-.dash-admin {
+* {
+    box-sizing: border-box; 
+    transition: all 0.2s ease-in-out; /* Smooth transitions for hover effects */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+}
+
+.admin-root {
   width: 100%;
-  height: 90vh;
-  color: #0f172a;
-  box-sizing: border-box;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial;
-  background-color: white;
+  font-family: 'Roboto', 'Helvetica', Arial, sans-serif;
+  padding: 30px 20px;
+  min-height: 100vh;
+  color: var(--text-color);
+  background : white;
+  display: flex;
+  flex-direction: column;
 }
 
-.dash-container {
-  display: flex;
-  align-items: flex-start;
+/* === Header === */
+.admin-header {
+  text-align: center;
+    margin-bottom: 20px;
+
 }
-.section-dash {
+
+.admin-header h1 {
+  color: var(--text-color);
+  font-size: 2.5rem;
+  font-weight: 300; 
+}
+
+/* === Grid Layout (Responsive) === */
+.admin-grid {
+  gap: 30px;
   display: flex;
-  padding: 20px;
-  max-width: 1200px;
-  height: 90vh;
+  flex-direction: column;
+  max-width: 100%;
   margin: 0 auto;
-  margin-bottom: 60px;
+}
+
+
+/* === Card Styles === */
+.card {
+  width: 100%;
+  height: 500px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+  padding: 30px;
+  border: none;
+}
+.user-metadata{
+  height: 60%;
+  color: black;
+  display:flex;
   justify-content: space-around;
+  align-items: center;
+  flex-direction:column;
+}
+.card h2 {
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  margin: 0;
+  padding-bottom: 8px;
+  margin-bottom: 25px;
+  border-bottom: 3px solid var(--primary-color); 
+  display: inline-block; 
+}
+
+/* === List and List Item Styles === */
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 35px;
+  margin-bottom: 15px;
+  overflow-y: scroll;
+}
+
+.list-item {
+  display: flex;
+  grid-template-columns: repeat(350px, 1fr);
+  flex-direction: column;
+  width: 350px;
+  height: 300px;
+  color: black;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 20px;
+  border-radius: 8px;
+  background-color: #fcfcfc;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.list-item:hover {
+    background-color: #f8f8f8;
+}
+
+.user-details, .opp-details {
+    flex-grow: 1;
+    overflow: hidden;
+    padding-right: 15px;
+}
+
+.user-details strong, .opp-details strong {
+  display: block;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--text-color);
+}
+
+/* === Text Utilities === */
+.muted {
+  color: var(--muted-color);
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted-color);
+  padding: 40px 0;
+  border: 1px dashed var(--border-color);
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+/* === Button Styles === */
+.actions, .inline-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.btn.primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+.btn.primary:hover {
+    background-color: #1660c7;
+}
+
+.btn.secondary {
+  background-color: #e0e0e0;
+  color: var(--text-color);
+}
+.btn.secondary:hover {
+    background-color: #c4c4c4;
+}
+
+.btn.action-edit {
+    background-color: #f0f0f0;
+    color: var(--text-color);
+}
+.btn.action-edit:hover {
+    background-color: #e0e0e0;
+}
+
+.btn.danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+.btn.danger:hover {
+    background-color: #c42721;
+}
+
+/* === Edit Form Styles === */
+
+/* Used for inline editing of Users */
+.user-edit-form { 
+    display: flex;
+    gap: 10px;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+}
+
+/* Used for multi-line editing of Opportunities */
+.opp-edit-form { 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.user-edit-form input,
+.opp-edit-form input,
+.opp-edit-form textarea {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.95rem;
+  flex-grow: 1;
   box-sizing: border-box;
 }
-.section-dash div {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 12px 0;
-}
-.section-dash span {
-  font-size: 20px;
-  font-weight: 600;
-}
-.users,
-.opportunities {
-  display: flex;
-  width: 350px;
-  height: 150px;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 12px;
-  box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.6);
-  font-size: 16px;
-  font-weight: 500;
+
+.user-edit-form input:focus,
+.opp-edit-form input:focus,
+.opp-edit-form textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2); 
 }
 
-.section-dash button {
-  border: none;
-  border-radius: 8px;
-  color: white;
-  background-color: var(--primary);
-  cursor: pointer;
-  font-size: 18px;
-  margin-left: 18px;
-  padding: 40px;
-}
-.btn.primary {
-  position: relative;
-  left: 4rem;
-  padding-left: 3rem;
+.opp-edit-form textarea {
+    resize: vertical;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .dash-container {
-    flex-direction: column;
-    padding: 0 12px;
-  }
-  .dash-sidebar {
-    width: 100%;
-    order: 2;
-  }
-  .dash-main {
-    order: 1;
-  }
+/* Action button grouping within the edit forms */
+.user-edit-form .inline-actions,
+.opp-edit-form .inline-actions {
+    margin-top: 5px;
+}
+
+.user-edit-form .inline-actions {
+    justify-content: flex-end; 
+}
+.opp-edit-form .inline-actions {
+    justify-content: flex-start;
+}
+
+
+/* === Responsive Adjustments (Mobile Optimization) === */
+@media (max-width: 600px) {
+    .card {
+        padding: 20px;
+    }
+    .list-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .actions {
+        width: 100%;
+        justify-content: space-around; 
+    }
+    .user-details, .opp-details {
+        padding-right: 0;
+        width: 100%;
+    }
+    
+    /* Stack form inputs and buttons vertically in edit mode on small screens */
+    .user-edit-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .user-edit-form input {
+        width: 100%;
+    }
+    .user-edit-form .inline-actions,
+    .opp-edit-form .inline-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
 }

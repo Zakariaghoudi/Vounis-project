@@ -2,27 +2,36 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //  for register user : DONE
-export const userRegister = createAsyncThunk("/user/register", async (user) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/user/register",
-      user
-    );
-    return  response.data;
-  } catch (error) {
-    console.log(error);
+export const userRegister = createAsyncThunk(
+  "/user/register",
+  async (user, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/user/register",
+        user
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "error");
+    }
   }
-});
+);
 
 //  for login user : DONE
-export const userLogin = createAsyncThunk("/user/login", async (user) => {
-  try {
-    const response = await axios.post("http://localhost:5000/user/login", user);
-    return  response.data;
-  } catch (error) {
-    console.log(error);
+export const userLogin = createAsyncThunk(
+  "/user/login",
+  async (user, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/user/login",
+        user
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "error");
+    }
   }
-});
+);
 // api for current user : DONE
 export const currentUser = createAsyncThunk(
   "/user/current",
@@ -31,58 +40,62 @@ export const currentUser = createAsyncThunk(
       const response = await axios.get("http://localhost:5000/user/current", {
         headers: { Authorization: localStorage.getItem("token") },
       });
-      return  response.data;
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data.error.message || error.message);
+      return rejectWithValue(error.response?.data.message ||error.message);
     }
   }
 );
-// verification account after register 
-export const userVerification = createAsyncThunk("/user/verify", async (user,{rejectWithValue}) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/user/verification",
-      user
-    );
-    return  response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data.message || error.message);
+// verification account after register
+export const userVerification = createAsyncThunk(
+  "/user/verify",
+  async (user, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/user/verification",
+        user
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message || error.message);
+    }
   }
-});
+);
 
 //get users
-export const getUser = createAsyncThunk(
-  "/get/users",
-  async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/user");
-      return  response.data.users;
-    } catch (error) {
-      console.log(error)
-    }
-  }
-);
-
-//update user : edit user Profile 
-export const editUser = createAsyncThunk("/edit/user", async ({id, editProfil}) => {  
+export const getUser = createAsyncThunk("/get/users", async () => {
   try {
-    const response = await axios.put(`http://localhost:5000/user/${id}`, editProfil);
-    return  response.data;
+    const response = await axios.get("http://localhost:5000/user");
+    return response.data;
   } catch (error) {
     console.log(error);
   }
 });
+
+//update user : edit user Profile
+export const editUser = createAsyncThunk(
+  "/edit/user",
+  async ({ id, editProfil }) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/user/${id}`,
+        editProfil
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 // //delete user
 export const deleteUser = createAsyncThunk("/delete/user", async (id) => {
   try {
-    const result = await axios.delete(`http://localhost:5000/user/${id}`,
-     );
-    return result ;
+    const result = await axios.delete(`http://localhost:5000/user/${id}`);
+    return result;
   } catch (error) {
     console.log(error);
   }
 });
-
 
 const initialState = {
   user: null,
@@ -101,7 +114,6 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-
     // User registration : DONE
     builder.addCase(userRegister.pending, (state) => {
       state.status = "pending";
@@ -129,15 +141,15 @@ export const userSlice = createSlice({
       state.status = "failed";
       state.error = action.payload;
     });
-     builder.addCase(userVerification.pending, (state) => {
+    //user verification
+    builder.addCase(userVerification.pending, (state) => {
       state.status = "pending";
-      state.error = null
+      state.error = null;
     });
     builder.addCase(userVerification.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.user = action.payload?.user;
-     localStorage.setItem("token", action.payload?.token);
-
+      state.user = action.payload.user;
+      localStorage.setItem("token", action.payload.token);
     });
     builder.addCase(userVerification.rejected, (state, action) => {
       state.status = "failed";
@@ -150,12 +162,12 @@ export const userSlice = createSlice({
       state.error = null;
     });
     builder.addCase(currentUser.fulfilled, (state, action) => {
-      state.status = "fulfilled";
       state.user = action.payload.user;
+      state.status = "fulfilled";
     });
     builder.addCase(currentUser.rejected, (state, action) => {
-      state.status = "failed";
       state.error = action.payload;
+      state.status = "failed";
     });
 
     // for get all users : DONE
@@ -173,10 +185,10 @@ export const userSlice = createSlice({
       state.error = action.payload;
     });
 
-// update : edit profile of user
- builder.addCase(editUser.pending, (state) => {
+    // update : edit profile of user
+    builder.addCase(editUser.pending, (state) => {
       state.status = "pending";
-      state.error = null
+      state.error = null;
     });
     builder.addCase(editUser.fulfilled, (state, action) => {
       state.status = "fulfilled";
@@ -187,8 +199,8 @@ export const userSlice = createSlice({
       state.error = action.payload;
     });
 
-// delete user 
- builder.addCase(deleteUser.pending, (state) => {
+    // delete user
+    builder.addCase(deleteUser.pending, (state) => {
       state.status = "pending";
       state.error = null;
     });
@@ -196,7 +208,7 @@ export const userSlice = createSlice({
       state.status = "fulfilled";
       state.userList = action.payload.data;
     });
-    builder.addCase(deleteUser.rejected, (state,action) => {
+    builder.addCase(deleteUser.rejected, (state, action) => {
       state.status = "failed";
       state.error = action.payload;
     });

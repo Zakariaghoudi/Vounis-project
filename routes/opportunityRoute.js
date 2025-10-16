@@ -18,7 +18,7 @@ opportunityRouter.post("/add", async (req, res) => {
 opportunityRouter.get("/", async (req, res) => {
   try {
     const result = await Opportunity.find();
-    res.send({ opportunities: result, message: "opportunities found" });
+    res.send({opportunities : result, msg : "opportunities found"} );
   } catch (error) {
     console.log(error);
   }
@@ -27,7 +27,7 @@ opportunityRouter.get("/", async (req, res) => {
 opportunityRouter.put("/:id", async (req, res) => {
   try {
     const result = await Opportunity.findByIdAndUpdate(req.params.id, req.body);
-    res.send({ opportunity: result, message: "opportunity updated" });
+    res.send( result,  "opportunity updated" );
   } catch (error) {
     console.log(error);
   }
@@ -36,7 +36,7 @@ opportunityRouter.put("/:id", async (req, res) => {
 opportunityRouter.delete("/:id", async (req, res) => {
   try {
     const result = await Opportunity.findByIdAndDelete(req.params.id);
-    res.send({ opportunity: result, message: "opportunity deleted" });
+    res.send( result, "opportunity deleted" );
   } catch (error) {
     console.log(error);
   }

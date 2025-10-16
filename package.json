@@ -12,6 +12,7 @@
     "dev": "concurrently \"npm run client\" \"npm run server\""
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "bcryptjs": "^3.0.2",
     "compression": "^1.8.1",
     "concurrently": "^9.2.1",

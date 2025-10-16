@@ -4,43 +4,40 @@ const Application = require("../models/applicationModel");
 
 //add new Application
 applicationRouter.post("/add", async (req, res) => {
-  const { id_host,
-    id_volunteer,
-    id_opportunity,
-    status} = req.body;
+  const { id_host, id_volunteer, id_opportunity, status } = req.body;
   try {
     const result = await new Application(req.body);
     result.save();
-    res.send("Application added", result);
+    res.send(result, "Application added");
   } catch (error) {
     res.status(402).send({ msg: "try again", error });
   }
 });
-// get all opportunities
+// get all applications
 applicationRouter.get("/", async (req, res) => {
   try {
     const result = await Application.find();
-    res.send({ applications: result, message: "application found" });
+    res.send(result, "application found");
   } catch (error) {
-      res.status(400).send({msg: "no application found", error});
+    res.status(400).send({ msg: "no application found", error });
   }
 });
 // update an Application
 applicationRouter.put("/:id", async (req, res) => {
   try {
     const result = await Application.findByIdAndUpdate(req.params.id, req.body);
-    res.send({ application: result, message: "Application updated" });
+    res.send(result, "Application updated");
   } catch (error) {
-      res.status(400).send({msg: "no updated found", error});
+    res.status(400).send({ msg: "no updated found", error });
   }
 });
-// dalete an Application 
+// dalete an Application
 applicationRouter.delete("/:id", async (req, res) => {
-    try {
-        const result = await Application.findByIdAndDelete(req.params.id);
-        res.send({ application: result, message: "Application deleted" }); 
-    } catch (error) {
-      res.status(400).send({msg: "try again", error});
-    }
+  try {
+    const result = await Application.findByIdAndDelete(req.params.id);
+    res.send(result, "Application deleted");
+  } catch (error) {
+    res.status(400).send({ msg: "try again", error });
+  }
 });
 module.exports = applicationRouter;

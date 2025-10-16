@@ -16,8 +16,8 @@ import ProfileHost from "./pages/profileHost";
 import Verification from "./components/verification";
 //-----import slices and hooks----------
 import { Routes, Route } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 import HowItWorks from "./pages/howItWork";
 import { currentUser, getUser } from "./app/Slices/userSlice";
 import { getApplication } from "./app/Slices/appSlice";
@@ -25,8 +25,6 @@ import DashAdmin from "./pages/dashAdmin";
 import { getOpportunity } from "./app/Slices/opportunitySlice";
 
 function App() {
-  //-------to re render when we update our profile------
-  const [ping, setping] = useState(false);
   // const currentuser = persons.filter((el) => el._id == person?._id);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -34,11 +32,11 @@ function App() {
     dispatch(currentUser());
     dispatch(getApplication());
     dispatch(getOpportunity());
-  }, [ping]);
+  }, [dispatch]);
   return (
     <>
-   
-      <Header ping={ping} setping={setping}/>
+  
+      <Header />
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/how-it-work" element={<HowItWorks />} />
@@ -47,10 +45,14 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verification" element={<Verification />} />
-        <Route element={<PrivateRoute />}>
-          <Route path="/profil-volunteer" element={<VolunteerProfil />} />
-          <Route path="/profil-host" element={<ProfileHost />} />
+        <Route element={<PrivateRoute adminOnly={true}  />} >
           <Route path="/profil-admin" element={<DashAdmin />} />
+        </Route>
+        <Route element={<PrivateRoute role={['volunteer']} />} >
+          <Route path="/profil-volunteer" element={<VolunteerProfil />} />
+        </Route>
+        <Route  element={<PrivateRoute role={['host']} />} >
+          <Route path="/profil-host" element={<ProfileHost />} />
         </Route>
       </Routes>
       <Footer />

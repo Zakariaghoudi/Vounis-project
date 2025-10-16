@@ -7,33 +7,46 @@
 
 .profile-container {
   margin: 0 auto;
+  height: 90vh;
   background-color: none;
   width: 60%;
   display: flex;
 }
 
 .profile-form {
-  padding: 40px 20px;
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  width: 800px;
+  justify-content: center;
+  gap: 10px;
+  width: 730px;
+  height: 680px;
   margin: 40px auto;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
   background: linear-gradient(to bottom, #e0f2f1, #ffffff);
 }
 .form-group label {
+  margin: 0;
   display: block;
-  margin-bottom: 12px;
   font-weight: bold;
   color: var(--text-color);
 }
+.name-lastName, .email-phone {
+  width: 100%;
+  padding: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 25px;
+}
+
+
 
 .profile-form input,
 .profile-form textarea {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid var(--border-color);
   border-radius: 12px;
   box-sizing: border-box;
