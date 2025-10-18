@@ -5,7 +5,7 @@ import axios from "axios";
 // add new  applications
 export const addApplication = createAsyncThunk("/application/add", async (application) => {
   try {
-    const response = await axios.post("http://localhost:5000/applications/add", application);
+    const response = await axios.post("https://vounis.onrender.com/add", application);
     return await response.data;
   } catch (error) {
     console.log(error);
@@ -15,7 +15,7 @@ export const addApplication = createAsyncThunk("/application/add", async (applic
 // get all applications
 export const getApplication = createAsyncThunk("/application/get", async (_,{rejectWithValue}) => {
   try {
-    const response = await axios.get("http://localhost:5000/applications");
+    const response = await axios.get("https://vounis.onrender.com");
     return await response.data;
   } catch (error) {
       return rejectWithValue(error.response.data.message || error.message);
@@ -28,7 +28,7 @@ export const updateApplication = createAsyncThunk(
   async ( {id, editApp  }, {rejectWithValue}) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/applications/${id}`,
+        `https://vounis.onrender.com/${id}`,
         editApp 
       );
       return await response.data;
@@ -43,7 +43,7 @@ export const deleteApplication = createAsyncThunk(
   async (id, {rejectWithValue}) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/applications/${id}`
+        `https://vounis.onrender.com/${id}`
       );
       return await response.data;
     } catch (error) {

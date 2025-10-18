@@ -7,7 +7,7 @@ export const userRegister = createAsyncThunk(
   async (user, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/user/register",
+        "https://vounis.onrender.com/user/register",
         user
       );
       return response.data;
@@ -23,7 +23,7 @@ export const userLogin = createAsyncThunk(
   async (user, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/user/login",
+        "https://vounis.onrender.com/user/login",
         user
       );
       return response.data;
@@ -36,14 +36,17 @@ export const userLogin = createAsyncThunk(
 export const currentUser = createAsyncThunk(
   "/user/current",
   async (_, { rejectWithValue }) => {
-    const token = localStorage.getItem('token');
-    if(!token){
-      return rejectWithValue('no token') 
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return rejectWithValue("no token");
     }
     try {
-      const response = await axios.get("http://localhost:5000/user/current", {
-        headers: { Authorization: `${token}` },
-      });
+      const response = await axios.get(
+        "https://vounis.onrender.com/user/current",
+        {
+          headers: { Authorization: `${token}` },
+        }
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data.message || error.message);
@@ -56,7 +59,7 @@ export const userVerification = createAsyncThunk(
   async (user, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/user/verification",
+        "https://vounis.onrender.com/user/verification",
         user
       );
       return response.data;
@@ -69,7 +72,7 @@ export const userVerification = createAsyncThunk(
 //get users
 export const getUser = createAsyncThunk("/get/users", async () => {
   try {
-    const response = await axios.get("http://localhost:5000/user");
+    const response = await axios.get("https://vounis.onrender.com/user");
     return response.data;
   } catch (error) {
     console.log(error);
@@ -82,7 +85,7 @@ export const editUser = createAsyncThunk(
   async ({ id, editProfil }) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/user/${id}`,
+        `https://vounis.onrender.com/user/${id}`,
         editProfil
       );
       return response.data;
@@ -97,7 +100,7 @@ export const forgotPassword = createAsyncThunk(
   async (email, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/user/forgot-password",
+        "https://vounis.onrender.com/user/forgot-password",
         { email }
       );
       return response.data;
@@ -112,8 +115,8 @@ export const resetPassword = createAsyncThunk(
   async ({ token, password }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/user/reset-password/${token}`,
-        {password}
+        `https://vounis.onrender.com/user/reset-password/${token}`,
+        { password }
       );
       return response.data;
     } catch (error) {
@@ -124,7 +127,7 @@ export const resetPassword = createAsyncThunk(
 // //delete user
 export const deleteUser = createAsyncThunk("/delete/user", async (id) => {
   try {
-    const result = await axios.delete(`http://localhost:5000/user/${id}`);
+    const result = await axios.delete(`https://vounis.onrender.com/user/${id}`);
     return result;
   } catch (error) {
     console.log(error);
@@ -135,7 +138,7 @@ const initialState = {
   user: null,
   status: null,
   error: null,
-  successMessage :  null,
+  successMessage: null,
   userList: [],
 };
 export const userSlice = createSlice({
@@ -248,30 +251,29 @@ export const userSlice = createSlice({
       state.error = action.payload;
     });
 
-  // forgot password
-   builder.addCase(forgotPassword.pending, (state) => {
+    // forgot password
+    builder.addCase(forgotPassword.pending, (state) => {
       state.status = "pending";
       state.error = null;
     });
     builder.addCase(forgotPassword.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.successMessage= action.payload;
-      state.error= action.payload;
-      
+      state.successMessage = action.payload;
+      state.error = action.payload;
     });
     builder.addCase(forgotPassword.rejected, (state, action) => {
       state.status = "failed";
       state.error = action.payload;
     });
-  //reset passwordé
-   builder.addCase(resetPassword.pending, (state) => {
+    //reset passwordé
+    builder.addCase(resetPassword.pending, (state) => {
       state.status = "pending";
       state.error = null;
     });
     builder.addCase(resetPassword.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.successMessage= action.payload;
-      state.error= action.payload;
+      state.successMessage = action.payload;
+      state.error = action.payload;
     });
     builder.addCase(resetPassword.rejected, (state, action) => {
       state.status = "failed";
