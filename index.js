@@ -6,13 +6,18 @@ const connect = require("./config/configDB");
 const express = require("express");
 const app = express();
 const cors = require("cors");
-
+const allowedOrigins =[
+  'https://vounis-project.vercel.app',
+  'http://localhost:5173'
+];
 //------------- connect to MONGO database ----------
 connect();
 
 // ------------middleware------------
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins
+  }));
 
 // ------------ use router ----------
 
