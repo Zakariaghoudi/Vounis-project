@@ -21,7 +21,7 @@ export const getOpportunity = createAsyncThunk(
   "/opportunity/get",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("https://vounis.onrender.com");
+      const response = await axios.get("https://vounis.onrender.com/");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message || error.message);
@@ -48,9 +48,7 @@ export const deleteOpportunity = createAsyncThunk(
   "/opportunity/delete",
   async (id, { rejectWithValue }) => {
     try {
-      const result = await axios.delete(
-        `https://vounis.onrender.com/${id}`
-      );
+      const result = await axios.delete(`https://vounis.onrender.com/${id}`);
       return result;
     } catch (error) {
       return rejectWithValue(error.response.data.message || error.message);

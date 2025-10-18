@@ -15,7 +15,7 @@ export const addApplication = createAsyncThunk("/application/add", async (applic
 // get all applications
 export const getApplication = createAsyncThunk("/application/get", async (_,{rejectWithValue}) => {
   try {
-    const response = await axios.get("https://vounis.onrender.com");
+    const response = await axios.get("https://vounis.onrender.com/");
     return await response.data;
   } catch (error) {
       return rejectWithValue(error.response.data.message || error.message);
