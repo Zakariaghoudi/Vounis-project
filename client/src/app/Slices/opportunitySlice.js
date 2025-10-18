@@ -21,7 +21,7 @@ export const getOpportunity = createAsyncThunk(
   "/opportunity/get",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("https://vounis.onrender.com/");
+      const response = await axios.get("https://vounis.onrender.com/opportunities");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message || error.message);
