@@ -212,7 +212,6 @@ exports.loginUser = async (req, res) => {
   try {
     // check if email already exist
     const currentuser = await User.findOne({ email });
-    console.log(currentuser);
     if (!currentuser) {
       return res.status(401).send({ msg: "You don't have an account!" });
     }

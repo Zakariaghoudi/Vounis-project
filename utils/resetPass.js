@@ -2,7 +2,7 @@ const transporter = require("./email");
 
 const sendResetEmail = async (userEmail, resetToken) => {
   try {
-    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetUrl = `https://vounis-project.vercel.app/${resetToken}`;
     const mailOptions = {
       form: "Vounis Center",
       to: userEmail,

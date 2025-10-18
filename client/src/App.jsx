@@ -30,7 +30,6 @@ function App() {
   // const currentuser = persons.filter((el) => el._id == person?._id);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getUser());
     dispatch(currentUser());
     dispatch(getApplication());
     dispatch(getOpportunity());
