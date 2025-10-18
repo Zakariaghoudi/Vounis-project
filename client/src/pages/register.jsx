@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { userRegister } from "../app/Slices/userSlice";
-import { toast } from "react-toastify";
 
 function Register() {
   const [form, setForm] = useState({
@@ -29,8 +28,8 @@ function Register() {
   };
   const navigate = useNavigate();
   return (
-    <register className="page-register">
-      <form className="register-form" onSubmit={handleSubmit}>
+    <div className="page-register">
+      <div className="register-form" onSubmit={handleSubmit}>
         <h2>Resgister Now</h2>
         <div className="name-lastname">
           <div className="input-register">
@@ -87,8 +86,8 @@ function Register() {
             You have an account? <Link to="/login">Login</Link>
           </p>
         </div>
-      </form>
-    </register>
+      </div>
+    </div>
   );
 }
 

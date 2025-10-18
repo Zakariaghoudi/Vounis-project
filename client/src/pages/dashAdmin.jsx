@@ -11,10 +11,7 @@ import {
   deleteOpportunity,
 } from "../app/Slices/opportunitySlice";
 
-/**
- * DashAdmin - Enhanced Admin Panel (Edit/Delete Only)
- * Manages existing users (Edit/Delete) and opportunities (Edit/Delete).
- */
+
 const DashAdmin = () => {
   const dispatch = useDispatch();
 
@@ -24,35 +21,20 @@ const DashAdmin = () => {
     (state) => state.opportunity.opportunity || []
   );
 
-  // const usersMap = users.reduce((acc, user)=>{
-  //   const userId = user._id
-  //   acc[userId] = user
-  //   return acc;
-  // },{});
-  // const oppWithHost = opportunities.map((opportunity)=>{
-  //   const publisherId = opportunity?.id_host
-  //   const publisher =usersMap[publisherId];
-  //   const publisherName = publisher ? publisher?.name : 'User Unknow';
-  //   return {
-  //     ...opportunity, publisherName :  publisherName
-  //   }
-  // })
-  // State for User Management (Includes role and verified)
-
   const [editingUserId, setEditingUserId] = useState(null);
   const [userForm, setUserForm] = useState({
     name: "",
     email: "",
-    role: "user", // Default role
-    verified: "false", // Default verified status (using string for select value)
-  });
+    role: "", 
+    verified: "" 
+    });
 
   // State for Opportunity Management (Includes status)
   const [oppForm, setOppForm] = useState({
     title: "",
     location: "",
     description: "",
-    status: "Open", // Default status
+    status: "Open", 
   });
   const [editingOppId, setEditingOppId] = useState(null);
 
@@ -83,8 +65,8 @@ const DashAdmin = () => {
     setUserForm({
       name: u.name || "",
       email: u.email || "",
-      role: u.role || "user", // Default to 'user' if not set
-      verified: u.verified ? "true" : "false", // Convert boolean to string
+      role: u.role || "user", 
+      verified: u.isVerified ?"true" : "false", 
     });
   };
 
@@ -127,7 +109,7 @@ const DashAdmin = () => {
       title: o.title || "",
       location: o.location || "",
       description: o.description || "",
-      status: o.status || "Open", // Default to 'Open' if not set
+      status: o.status || "Open",
     });
   };
 

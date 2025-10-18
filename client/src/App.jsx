@@ -23,6 +23,8 @@ import { currentUser, getUser } from "./app/Slices/userSlice";
 import { getApplication } from "./app/Slices/appSlice";
 import DashAdmin from "./pages/dashAdmin";
 import { getOpportunity } from "./app/Slices/opportunitySlice";
+import ForgotPassword from "./components/forgetPass";
+import ResetPassword from "./components/resetPass";
 
 function App() {
   // const currentuser = persons.filter((el) => el._id == person?._id);
@@ -44,6 +46,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/reset-password/:token" element={< ResetPassword/>} />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/verification" element={<Verification />} />
         <Route element={<PrivateRoute adminOnly={true}  />} >
           <Route path="/profil-admin" element={<DashAdmin />} />

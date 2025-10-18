@@ -1,0 +1,244 @@
+/* home.css - styles for Home page */
+
+:root {
+  --bg: #e6e4e2;
+  --accent: #5ae6a4; /* gold */
+  --accent-dark: #219c63;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --radius: 14px;
+  --gap: 18px;
+}
+
+.home-hero {
+  background: var(--bg);
+  padding: 28px 20px;
+  box-sizing: border-box;
+}
+
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 28px;
+  align-items: center;
+}
+.hero-content {
+  padding: 28px;
+}
+.hero-title {
+  font-size: 2.4rem;
+  margin: 0 0 12px 0;
+  color: #0f172a;
+}
+.hero-sub {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin-bottom: 18px;
+}
+.hero-ctas {
+  display: flex;
+  gap: 12px;
+}
+.btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+}
+.btn.primary {
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  color: #111;
+}
+.btn.ghost {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent-dark);
+  && :hover{
+    background-color: #219c63;
+    color: white;
+  }
+}
+
+.hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.visual-card {
+  width: 100%;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
+}
+.visual-card .tag {
+  display: inline-block;
+  background: #e0f0eb;
+  color: var(--accent-dark);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.visual-card h3 {
+  margin: 12px 0 6px 0;
+}
+.visual-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.features {
+  max-width: 1200px;
+  margin: 34px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.feature {
+  background: var(--card);
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.04);
+}
+.feature h4 {
+  margin: 0 0 8px 0;
+}
+.feature p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.about {
+  max-width: 1200px;
+  margin: 34px auto;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: center;
+}
+.about-card {
+  background: var(--card);
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(2, 6, 23, 0.04);
+}
+.about-card h2 {
+  margin-top: 0;
+}
+.about-card p {
+  color: var(--muted);
+}
+.about-card ul {
+  margin-top: 12px;
+  padding-left: 18px;
+  color: var(--muted);
+}
+.about-image {
+  height: 220px;
+  border-radius: 12px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 980px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .about {
+    grid-template-columns: 1fr;
+  }
+  .features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-visual {
+    order: -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 1.6rem;
+  }
+  .features {
+    grid-template-columns: 1fr;
+  }
+  .visual-card {
+    padding: 14px;
+  }
+  .hero-content {
+    padding: 18px;
+  }
+  .btn {
+    padding: 9px 12px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Agents (team) section */
+.agents {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 12px;
+}
+.agents .section-title {
+  margin: 0 0 6px 0;
+  font-size: 1.35rem;
+}
+.agents .section-sub {
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.agents-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.agent-card {
+  background: var(--card);
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.04);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.agent-photo {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.agent-name {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.agent-meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+.agent-exp {
+  margin-top: 6px;
+  font-weight: 700;
+  color: var(--accent-dark);
+  font-size: 0.9rem;
+}
+.agent-bio {
+  margin: 8px 0 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 980px) {
+  .agents-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .agents-grid {
+    grid-template-columns: 1fr;
+  }
+}

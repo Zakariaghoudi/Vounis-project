@@ -18,15 +18,16 @@
   background-size: cover;
   background-position: center;
   z-index: -1;
-  /* background: linear-gradient(180deg, #f3f7fb 0%, #ffffff 100%); */
 }
 
-.register-form {
+.register-form  {
   margin-right: 70px;
-  width: 100%;
-  max-width: 540px;
-  max-height: 500px;
+  max-width: 520px;
+  height: 530px;
   background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   border-radius: 12px;
   padding: 28px 28px;
   box-shadow: 0 10px 30px rgba(16, 24, 40, 0.8);

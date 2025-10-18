@@ -125,7 +125,7 @@ main {
   margin-bottom: 40px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
   width: 90%;
-  height: 500px;
+  height: 600px;
 }
 .host-panel.panel {
   overflow-y: scroll;

@@ -74,7 +74,7 @@ button {
 }
 .header {
   max-width: 100%;
-  height: 100px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -86,7 +86,6 @@ button {
   width: 300px;
   height: 200px;
   cursor: pointer;
-  
 }
 .nav-links-wrapper {
   width: 100%;
@@ -117,14 +116,13 @@ button {
   font-size: 18px;
 }
 
-.btn {
-  padding-right: 10px;
+.btns-nav {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
 }
-.btn a {
+.btns-nav a {
   color: var(--color-background);
   font-size: 16px;
   font-weight: 700;
@@ -140,7 +138,7 @@ button {
 }
 .btn-profil {
   margin-right: 20px;
-  background-color: var(--color-primary-green);
+  background-color: #4fb284;
   color: var(--color-text-light);
   padding: 10px 35px;
  &&:hover {

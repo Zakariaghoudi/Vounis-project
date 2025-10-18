@@ -1,0 +1,138 @@
+/* resetPass.css
+   Styles for ResetPassword component
+   Simple, responsive form with clear feedback states
+*/
+
+:root {
+  --bg: #f6fbf9;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent: #16a34a; /* green */
+  --accent-600: #15803d;
+  --danger: #ef4444;
+  --radius: 10px;
+  --shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+  --gap: 16px;
+}
+
+.reset-password-container {
+  width: 100%;
+  height: 90vh;
+  margin: 0 auto;
+  background-image: url("/public/bg1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+}
+
+.reset-password-container h2 {
+  text-align: center;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 0 8px 0;
+  font-size: 1.5rem;
+  color: #13812b;
+  border-bottom: 1px solid black;
+}
+
+.reset-password-container p {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 0 20px 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+form {
+  width: 100%;
+  max-width: 500px;
+  height: 500px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-right: 7rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label {
+  display: block;
+  font-size: 0.9rem;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #e6eef0;
+  background: #fff;
+  font-size: 0.95rem;
+  color: #0f172a;
+  box-sizing: border-box;
+}
+
+input[type="password"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(21, 128, 61, 0.12);
+}
+
+button[type="submit"] {
+  border: none;
+  background: linear-gradient(90deg, var(--accent), var(--accent-600));
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  margin-top: 6px;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(16, 185, 129, 0.12);
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.error-message {
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.06);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.success-message {
+  color: var(--accent-600);
+  background: rgba(16, 185, 129, 0.06);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+  .reset-password-container {
+    padding: 28px 14px;
+  }
+  form {
+    padding: 16px;
+  }
+}

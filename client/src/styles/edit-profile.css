@@ -1,8 +1,14 @@
 :root {
+  --color-primary-green: #21a150;
   --primary-color: var(--color-primary-green);
-  --text-color: #333;
-  --border-color: #ddd;
+  --text-color: #0f172a;
+  --border-color: #e6e6e6;
   --background-light: #f9f9f9;
+  --card-bg: #ffffff;
+}
+
+.hostpage {
+  width: 100%;
 }
 
 .profile-container {
@@ -11,72 +17,134 @@
   background-color: none;
   width: 60%;
   display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background: var(--background-light);
 }
 
 .profile-form {
-  padding: 20px 20px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 10px;
-  width: 730px;
+  min-width: 700px;
   height: 680px;
-  margin: 40px auto;
+  margin: 15px auto;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
   background: linear-gradient(to bottom, #e0f2f1, #ffffff);
 }
 .form-group label {
-  margin: 0;
+  margin: 0 ;
   display: block;
-  font-weight: bold;
+  font-weight: 600;
   color: var(--text-color);
+  font-size: 0.95rem;
 }
-.name-lastName, .email-phone {
+
+.name-lastName,
+.email-phone {
   width: 100%;
-  padding: 10px;
-  display: inline-flex;
+  padding: 6px 0;
+  display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 25px;
+  justify-content: space-between;
+  gap: 16px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
-
+.name-lastName > *,
+.email-phone > * {
+  flex: 1 1 48%;
+  min-width: 180px;
+}
 
 .profile-form input,
 .profile-form textarea {
   width: 100%;
-  padding: 10px;
+  padding: 12px 14px;
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 10px;
   box-sizing: border-box;
-  font-size: 15px;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  background: var(--card-bg);
+}
+
+.profile-form textarea {
+  min-height: 110px;
+  resize: vertical;
 }
 
 .skill-tag {
+  display: inline-block;
   background-color: #e8f5e9;
   color: var(--primary-color);
-  padding: 5px 12px;
-  border-radius: 15px;
-  font-size: 13px;
-  cursor: default;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
 }
 
 .save-changes-btn {
+  align-self: flex-end;
   background-color: var(--primary-color);
   color: white;
-  margin-top: 20px;
-  padding: 12px 30px;
+  margin-top: 10px;
+  padding: 10px 22px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  transition: background-color 0.2s;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .save-changes-btn:hover {
-  background-color: white;
-  color: var(--primary-color);
-  border: 1px solid var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(21, 128, 61, 0.08);
+}
+
+/* Responsive: tablet and below */
+@media (max-width: 900px) {
+  .profile-form {
+    padding: 18px;
+    margin: 20px;
+  }
+  .name-lastName > *,
+  .email-phone > * {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 14px;
+  }
+  .profile-form {
+    padding: 14px;
+    border-radius: 10px;
+  }
+  .form-group label {
+    font-size: 0.9rem;
+  }
+  .save-changes-btn {
+    width: 100%;
+    align-self: stretch;
+  }
+}
+
+/* Legacy host-page selector fallback */
+@media (min-width: 800px) {
+  .host-page {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+  }
 }

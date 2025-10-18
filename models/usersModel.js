@@ -36,6 +36,8 @@ const userSchema = new schema(
     isAdmin: { type: Boolean, default: false },
     otp: String,
     expiresOtp: Date,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
     isVerified: {
       type: Boolean,
       default: false,

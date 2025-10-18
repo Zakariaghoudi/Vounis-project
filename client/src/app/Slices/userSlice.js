@@ -36,9 +36,13 @@ export const userLogin = createAsyncThunk(
 export const currentUser = createAsyncThunk(
   "/user/current",
   async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem('token');
+    if(!token){
+      return rejectWithValue('no token') 
+    }
     try {
       const response = await axios.get("http://localhost:5000/user/current", {
-        headers: { Authorization: localStorage.getItem("token") },
+        headers: { Authorization: `${token}` },
       });
       return response.data;
     } catch (error) {
@@ -46,7 +50,7 @@ export const currentUser = createAsyncThunk(
     }
   }
 );
-// verification account after register
+// verification account after register OTP
 export const userVerification = createAsyncThunk(
   "/user/verify",
   async (user, { rejectWithValue }) => {
@@ -87,6 +91,36 @@ export const editUser = createAsyncThunk(
     }
   }
 );
+//Forgot password (reset)
+export const forgotPassword = createAsyncThunk(
+  "user/forgotPassword",
+  async (email, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/user/forgot-password",
+        { email }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "error sending");
+    }
+  }
+);
+//reset password
+export const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async ({ token, password }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/user/reset-password/${token}`,
+        {password}
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 // //delete user
 export const deleteUser = createAsyncThunk("/delete/user", async (id) => {
   try {
@@ -101,6 +135,7 @@ const initialState = {
   user: null,
   status: null,
   error: null,
+  successMessage :  null,
   userList: [],
 };
 export const userSlice = createSlice({
@@ -166,7 +201,7 @@ export const userSlice = createSlice({
       state.status = "fulfilled";
     });
     builder.addCase(currentUser.rejected, (state, action) => {
-      state.error = action.payload;
+      // state.error = action.payload;
       state.status = "failed";
     });
 
@@ -209,6 +244,36 @@ export const userSlice = createSlice({
       state.userList = action.payload.data;
     });
     builder.addCase(deleteUser.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    });
+
+  // forgot password
+   builder.addCase(forgotPassword.pending, (state) => {
+      state.status = "pending";
+      state.error = null;
+    });
+    builder.addCase(forgotPassword.fulfilled, (state, action) => {
+      state.status = "fulfilled";
+      state.successMessage= action.payload;
+      state.error= action.payload;
+      
+    });
+    builder.addCase(forgotPassword.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    });
+  //reset passwordé
+   builder.addCase(resetPassword.pending, (state) => {
+      state.status = "pending";
+      state.error = null;
+    });
+    builder.addCase(resetPassword.fulfilled, (state, action) => {
+      state.status = "fulfilled";
+      state.successMessage= action.payload;
+      state.error= action.payload;
+    });
+    builder.addCase(resetPassword.rejected, (state, action) => {
       state.status = "failed";
       state.error = action.payload;
     });

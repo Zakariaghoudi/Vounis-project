@@ -25,7 +25,11 @@ applicationRouter.get("/", async (req, res) => {
 // update an Application
 applicationRouter.put("/:id", async (req, res) => {
   try {
-    const result = await Application.findByIdAndUpdate(req.params.id, req.body);
+    const result = await Application.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
     res.send(result, "Application updated");
   } catch (error) {
     res.status(400).send({ msg: "no updated found", error });

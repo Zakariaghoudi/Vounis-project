@@ -25,11 +25,11 @@ export const getApplication = createAsyncThunk("/application/get", async (_,{rej
 // update application
 export const updateApplication = createAsyncThunk(
   "/application/update",
-  async ( {id, editApp }, {rejectWithValue}) => {
+  async ( {id, editApp  }, {rejectWithValue}) => {
     try {
       const response = await axios.put(
         `http://localhost:5000/applications/${id}`,
-        editApp
+        editApp 
       );
       return await response.data;
     } catch (error) {
@@ -92,9 +92,10 @@ export const applicationSlice = createSlice({
     });
     builder.addCase(updateApplication.fulfilled, (state, action) => {
       state.status= "success"
+      // state.application=action.payload;
       const updatedApp = action.paylod;
-      const index = state.application.findIndex(app =>app._id === updatedApp._id);
-      if(index !== -1){
+      const index = state.application.findIndex(app =>app === updatedApp);
+      if(index !== -1 ){
         state.application[index ]= updatedApp;
       }
     });

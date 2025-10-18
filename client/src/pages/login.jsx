@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { userLogin } from "../app/Slices/userSlice";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../styles/register.css";
 
 const login = () => {
@@ -9,14 +9,20 @@ const login = () => {
     email: "",
     password: "",
   });
+  const {status,error} = useSelector((state)=>state.user);
+  const user = useSelector((s)=>s.user.user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(userLogin(form));
-    navigate("/");
   };
+  
+  if(user){
+
+    navigate("/");
+  }
   return (
     <div className="page-register">
       <form onSubmit={handleSubmit} className="register-form ">
@@ -40,12 +46,18 @@ const login = () => {
           />
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit" disabled={status==='pending'}>
+          {status==="pending" ? 'Logging in ...' : 'Login'}
+        </button>
         <div className="register">
           <p>
-            Don't have an account? <Link to="/register">Register Now</Link>
+            Don't have an account ? <Link to="/register">Register Now</Link>
           </p>
+            <Link to="/forgot-password">Forgot Password</Link>
         </div>
+        {error && <p style={{color:'red'}}>
+          {error.msg}
+          </p>}
       </form>
     </div>
   );

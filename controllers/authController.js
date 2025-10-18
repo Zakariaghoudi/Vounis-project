@@ -1,7 +1,7 @@
 const User = require("../models/usersModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const transporter = require("../config/email.js");
+const transporter = require("../utils/email.js");
 exports.registerUser = async (req, res) => {
   const {
     name,
@@ -129,7 +129,7 @@ exports.registerUser = async (req, res) => {
                                 <td style="padding-bottom: 20px; text-align: center;">
                                      <img src="https://raw.githubusercontent.com/Zakariaghoudi/Vounis-project/refs/heads/master/client/public/logo.png"
                                       alt="Vounis" width="150" style="display: block; border: 0;" />
-                                    <span style="font-size: 28px; font-weight: bold; color: #29b668ff;">Vounis</span>
+                                    <span style="font-size: 28px; font-weight: bold; color: #29b668ff;">Vounis Center</span>
                                 </td>
                             </tr>
 
@@ -143,7 +143,7 @@ exports.registerUser = async (req, res) => {
                             <!-- Main Content -->
                             <tr>
                                 <td style="padding-bottom: 20px; text-align: center; font-size: 16px; line-height: 24px; color: #555555;">
-                                    <p style="margin: 0;">Hi ${newUser.name},</p>
+                                    <p style="margin: 0;">Hi ${newUser.name } ${newUser.lastName} ,</p>
                                     <p style="margin: 15px 0 0;">You recently requested a verification code to complete your action. Please use the following code:</p>
                                 </td>
                             </tr>
@@ -164,16 +164,16 @@ exports.registerUser = async (req, res) => {
                                     <p style="margin: 15px 0 0;">If you did not request this code, please ignore this email.</p>
                                 </td>
                             </tr>
-                            <tr>
-                                <td style="padding-bottom: 30px; text-align: center;">
-                                    <a href="#" class="button" target="_blank" 
-                                    style="background-color: #40d48aff; color: #ffffff; padding: 12px 25px;
-                                     border-radius: 5px; display: inline-block; font-size: 18px; font-weight: bold;
-                                      text-decoration: none;">
-                                        Verify Now
-                                    </a>
-                                </td>
-                            </tr>
+                            // <tr>
+                            //     <td style="padding-bottom: 30px; text-align: center;">
+                            //         <a href="#" class="button" target="_blank" 
+                            //         style="background-color: #40d48aff; color: #ffffff; padding: 12px 25px;
+                            //          border-radius: 5px; display: inline-block; font-size: 18px; font-weight: bold;
+                            //           text-decoration: none;">
+                            //             Verify Now
+                            //         </a>
+                            //     </td>
+                            // </tr>
 
                             <!-- Footer -->
                             <tr>
