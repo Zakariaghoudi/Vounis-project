@@ -8,11 +8,11 @@
   background-size: cover;
   background-position: center;
   z-index: -1;
-  padding-right: 80px;
 }
-.verification-card{
-    width: 100%;
+.verification-card form{
+    margin-right:80px ;
     max-width: 400px;
+    max-height: 450px;
     padding: 40px;
     background-color: white;
     border-radius: 10px;

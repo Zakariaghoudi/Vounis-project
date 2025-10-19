@@ -23,11 +23,11 @@
 .register-form  {
   margin-right: 70px;
   max-width: 520px;
-  height: 530px;
+  height: 600px;
   background: #ffffff;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   border-radius: 12px;
   padding: 28px 28px;
   box-shadow: 0 10px 30px rgba(16, 24, 40, 0.8);

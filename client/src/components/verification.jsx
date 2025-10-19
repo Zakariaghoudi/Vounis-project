@@ -14,7 +14,7 @@ const verification = () => {
 
   useEffect(()=>{
     if(!userEmail){
-      navigate("/Register");
+      navigate("/verification");
     }
   },[userEmail,navigate]);
 
@@ -34,12 +34,11 @@ const verification = () => {
   return (
     <div className="verification-page">
       <div className="verification-card">
+        <form onSubmit={handleSubmit} className="form-verification">
         <h2>Account verification</h2>
         <p>
-          {" "}
           Please enter the 6-digit verification code that was sent to your email
         </p>
-        <form onSubmit={handleSubmit} className="form-verification">
           <div className="input-group">
             <label>The code verification :</label>
             <input

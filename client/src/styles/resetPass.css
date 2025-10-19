@@ -130,9 +130,11 @@ button[disabled] {
 
 @media (max-width: 640px) {
   .reset-password-container {
-    padding: 28px 14px;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
   }
   form {
-    padding: 16px;
+    margin-left: 6rem;
   }
 }
