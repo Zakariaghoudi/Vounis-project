@@ -1,7 +1,7 @@
 const User = require("../models/usersModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const transporter = require("../utils/email.js");
+const sendMail = require("../utils/email.js");
 exports.registerUser = async (req, res) => {
   const {
     name,
@@ -18,7 +18,7 @@ exports.registerUser = async (req, res) => {
     // check if email already exist
     const checkUser = await User.findOne({ email });
     if (checkUser) {
-      return res.status(400).send({ message: "email already exist"});
+      return res.status(400).send({ message: "email already exist" });
     }
 
     // create new user
@@ -45,13 +45,9 @@ exports.registerUser = async (req, res) => {
 
     // save the new user
     await newUser.save();
-
-    // sent verfication code to  email :
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: newUser.email,
-      subject: "Verfication Code",
-      html: `
+    
+    const subject = "Verfication Code -Vounis Center";
+    const html = `
          <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -143,7 +139,7 @@ exports.registerUser = async (req, res) => {
                             <!-- Main Content -->
                             <tr>
                                 <td style="padding-bottom: 20px; text-align: center; font-size: 16px; line-height: 24px; color: #555555;">
-                                    <p style="margin: 0;">Hi ${newUser.name } ${newUser.lastName} ,</p>
+                                    <p style="margin: 0;">Hi ${newUser.name} ${newUser.lastName} ,</p>
                                     <p style="margin: 15px 0 0;">You recently requested a verification code to complete your action. Please use the following code:</p>
                                 </td>
                             </tr>
@@ -193,8 +189,9 @@ exports.registerUser = async (req, res) => {
 
 </body>
 </html>
-      `,
-    });
+      `;
+    // sent verfication code to  email :
+    await sendMail(newUser.email, subject, html);
     // save the new user
     await newUser.save();
     res.status(201).send(newUser, "Please verify your account");

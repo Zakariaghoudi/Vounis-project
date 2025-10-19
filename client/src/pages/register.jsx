@@ -29,7 +29,7 @@ function Register() {
   const navigate = useNavigate();
   return (
     <div className="page-register">
-      <div className="register-form" onSubmit={handleSubmit}>
+      <form className="register-form" onSubmit={handleSubmit}>
         <h2>Resgister Now</h2>
         <div className="name-lastname">
           <div className="input-register">
@@ -86,7 +86,7 @@ function Register() {
             You have an account? <Link to="/login">Login</Link>
           </p>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
