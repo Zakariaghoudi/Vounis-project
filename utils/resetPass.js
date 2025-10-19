@@ -1,4 +1,4 @@
-const { sendMail } = require("./email");
+const sendMail = require("./email");
 
 const sendResetEmail = async (userEmail, resetToken) => {
   try {
