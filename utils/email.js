@@ -1,22 +1,32 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-const transport = {
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.PASS_USER,
-  },
+export const sendMail = async (to, subject, html) => {
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.PASS_USER,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+  const mailData = {
+    from: `"Vounis Center" <${process.env.EMAIL_USER}>`,
+    to,
+    subject,
+    html,
+  };
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailData, (err, info) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(info);
+      }
+    });
+  });
 };
-const transporter = nodemailer.createTransport(transport);
-transporter.verify((error, succes) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log("success ");
-  }
-});
-
-module.exports = transporter;
