@@ -45,7 +45,7 @@ exports.registerUser = async (req, res) => {
 
     // save the new user
     await newUser.save();
-    
+
     const subject = "Verfication Code -Vounis Center";
     const html = `
          <!DOCTYPE html>

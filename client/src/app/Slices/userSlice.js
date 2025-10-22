@@ -156,7 +156,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(userRegister.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.user = action.payload.user;
+      state.user = action.payload;
     });
     builder.addCase(userRegister.rejected, (state, action) => {
       state.status = "failed";
