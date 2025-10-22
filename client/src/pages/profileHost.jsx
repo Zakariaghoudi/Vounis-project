@@ -1,7 +1,7 @@
 import ProfilHeader from "../components/profileHeader";
 import EditProfile from "../components/editProfile";
 import "../styles/profileHost.css";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getOpportunity,
@@ -18,38 +18,48 @@ import {
 const ProfileHost = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  // console.log(user )
-  const opportunities = useSelector((state) =>(state.opportunity.opportunity));
-  // console.log("opp is", opportunities)
-  const applications = useSelector((s) =>(s.application.application));
-  console.log("applications is :" , applications)
+  console.log(user);
+  const opportunities = useSelector((state) => state.opportunity.opportunity);
+  console.log("opp is", opportunities);
+  const applications = useSelector((s) => s.application.application);
+  console.log("applications is :", applications);
   const [editingId, setEditingId] = useState(null);
   // Filter opportunies elli postihom el host
-  const myOpportunities = opportunities.filter((o) => o.id_host === user?._id);
-  // console.log("my opp is",myOpportunities)
+
+  const myOpportunities = useMemo(() => {
+    if (!opportunities || !user) {
+      return [];
+    }
+    return opportunities.filter((o) => o.postedBy?._id === user?._id);
+  }, [opportunities, user]);
+  console.log("my opp is", myOpportunities);
   //-- Filter applications elli apply 3lihom les volunteers
-  const myApplications = applications.filter((a) =>
-    myOpportunities.some((o) => o._id === a.id_opportunity)
-);
-console.log("my application is ", myApplications)
 
-// form for add an application 
-const [form, setForm] = useState({
-  title: "",
-  description: "",
-  skills: "",
-  location: "",
-  status: "open",
-});
+  const myApplications = useMemo(() => {
+    if (!applications || !user) {
+      return [];
+    }
+    return applications.filter((a) => a.id_host?._id === user?._id);
+  }, [applications, user]);
+  console.log("my application is ", myApplications);
 
-// for onChange in inputs form 
+  // form for add an application
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    skills: "",
+    location: "",
+    status: "open",
+  });
+
+  // for onChange in inputs form
   const handleChange = (e) =>
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
-  // for add an opportunity : 
+  // for add an opportunity :
   const handleAdd = async (e) => {
     e.preventDefault();
-    const payload = { ...form, id_host: user?._id };
+    const payload = { ...form, postedBy: user._id };
     try {
       await dispatch(addOpportunity(payload));
       setForm({ title: "", description: "", skills: "", location: "" });
@@ -59,7 +69,7 @@ const [form, setForm] = useState({
     }
   };
 
-  // // for edit an opportunity 
+  // // for edit an opportunity
   // const startEdit = (opp) => {
   //   setEditingId(opp._id);
   //   setForm({
@@ -69,10 +79,10 @@ const [form, setForm] = useState({
   //     location: opp.location || "",
   //   });
   // };
-// for the button save of edit opportunity
+  // for the button save of edit opportunity
   const handleSave = async (id) => {
     try {
-      const payload = { id, editOpportunity: { ...form, id_host: user?._id } };
+      const payload = { id, editOpportunity: { ...form, postedBy: user._id } };
       await dispatch(updateOpportunity(payload));
       setEditingId(null);
       setForm({ title: "", description: "", skills: "", location: "" });
@@ -81,7 +91,7 @@ const [form, setForm] = useState({
       console.error(err);
     }
   };
-// delete a opportunity of the host 
+  // delete a opportunity of the host
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this opportunity?")) return;
     try {
@@ -91,7 +101,7 @@ const [form, setForm] = useState({
       console.error(err);
     }
   };
-// edit status of rejected or accepted 
+  // edit status of rejected or accepted
   const handleApplicationUpdate = async (id, status) => {
     try {
       await dispatch(updateApplication({ id, editApp: { status } }));
@@ -100,7 +110,7 @@ const [form, setForm] = useState({
       console.error(err);
     }
   };
-// delete the application 
+  // delete the application
   const handleApplicationDelete = async (id) => {
     if (!window.confirm("Delete this application?")) return;
     try {
@@ -278,10 +288,11 @@ const [form, setForm] = useState({
               <div key={a._id} className="application-card">
                 <div>
                   <div>
-                    <strong>Volunteer:</strong> {a.id_volunteer}
+                    <strong>Volunteer:</strong> {a.id_volunteer.name}{" "}
+                    {a.id_volunteer.lastName}
                   </div>
                   <div>
-                    <strong>Opportunity:</strong> {a.id_opportunity}
+                    <strong>Opportunity:</strong> {a.id_opportunity.title}
                   </div>
                   <div className="meta">
                     <strong>Status:</strong> {a.status}

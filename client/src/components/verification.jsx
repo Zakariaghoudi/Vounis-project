@@ -13,7 +13,7 @@ const verification = () => {
   const navigate = useNavigate();
 
   useEffect(()=>{
-    if(!userEmail){
+    if(userEmail){
       navigate("/verification");
     }
   },[userEmail,navigate]);

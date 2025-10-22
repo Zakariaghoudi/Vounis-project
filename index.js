@@ -16,7 +16,7 @@ connect();
 // ------------middleware------------
 app.use(express.json());
 app.use(cors({
-  origin: allowedOrigins
+   origin: allowedOrigins
   }));
 
 // ------------ use router ----------

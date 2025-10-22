@@ -7,7 +7,7 @@ export const userRegister = createAsyncThunk(
   async (user, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://vounis.onrender.com/user/register",
+        "http://localhost:5000/user/register",
         user
       );
       return response.data;
@@ -23,7 +23,7 @@ export const userLogin = createAsyncThunk(
   async (user, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://vounis.onrender.com/user/login",
+        "http://localhost:5000/user/login",
         user
       );
       return response.data;
@@ -41,12 +41,9 @@ export const currentUser = createAsyncThunk(
       return rejectWithValue("no token");
     }
     try {
-      const response = await axios.get(
-        "https://vounis.onrender.com/user/current",
-        {
-          headers: { Authorization: `${token}` },
-        }
-      );
+      const response = await axios.get("http://localhost:5000/user/current", {
+        headers: { Authorization: `${token}` },
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data.message || error.message);
@@ -59,7 +56,7 @@ export const userVerification = createAsyncThunk(
   async (user, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://vounis.onrender.com/user/verification",
+        "http://localhost:5000/user/verification",
         user
       );
       return response.data;
@@ -72,7 +69,7 @@ export const userVerification = createAsyncThunk(
 //get users
 export const getUser = createAsyncThunk("/get/users", async () => {
   try {
-    const response = await axios.get("https://vounis.onrender.com/user");
+    const response = await axios.get("http://localhost:5000/user");
     return response.data;
   } catch (error) {
     console.log(error);
@@ -85,7 +82,7 @@ export const editUser = createAsyncThunk(
   async ({ id, editProfil }) => {
     try {
       const response = await axios.put(
-        `https://vounis.onrender.com/user/${id}`,
+        `http://localhost:5000/user/${id}`,
         editProfil
       );
       return response.data;
@@ -100,7 +97,7 @@ export const forgotPassword = createAsyncThunk(
   async (email, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://vounis.onrender.com/user/forgot-password",
+        "http://localhost:5000/user/forgot-password",
         { email }
       );
       return response.data;
@@ -115,7 +112,7 @@ export const resetPassword = createAsyncThunk(
   async ({ token, password }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `https://vounis.onrender.com/user/reset-password/${token}`,
+        `http://localhost:5000/user/reset-password/${token}`,
         { password }
       );
       return response.data;
@@ -127,8 +124,8 @@ export const resetPassword = createAsyncThunk(
 // //delete user
 export const deleteUser = createAsyncThunk("/delete/user", async (id) => {
   try {
-    const result = await axios.delete(`https://vounis.onrender.com/user/${id}`);
-    return result;
+    const result = await axios.delete(`http://localhost:5000/user/${id}`);
+    return result.data;
   } catch (error) {
     console.log(error);
   }
@@ -244,7 +241,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(deleteUser.fulfilled, (state, action) => {
       state.status = "fulfilled";
-      state.userList = action.payload.data;
+      state.userList = action.payload?.data;
     });
     builder.addCase(deleteUser.rejected, (state, action) => {
       state.status = "failed";

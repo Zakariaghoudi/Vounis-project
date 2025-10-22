@@ -7,7 +7,7 @@ export const addOpportunity = createAsyncThunk(
   async (opportunity, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://vounis.onrender.com/opportunities/add",
+        "http://localhost:5000/opportunities/add",
         opportunity
       );
       return response.data;
@@ -21,7 +21,7 @@ export const getOpportunity = createAsyncThunk(
   "/opportunity/get",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("https://vounis.onrender.com/opportunities");
+      const response = await axios.get("http://localhost:5000/opportunities");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message || error.message);
@@ -34,7 +34,7 @@ export const updateOpportunity = createAsyncThunk(
   async ({ id, editOpportunity }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `https://vounis.onrender.com/opportunities/${id}`,
+        `http://localhost:5000/opportunities/${id}`,
         editOpportunity
       );
       return response.data;
@@ -48,7 +48,7 @@ export const deleteOpportunity = createAsyncThunk(
   "/opportunity/delete",
   async (id, { rejectWithValue }) => {
     try {
-      const result = await axios.delete(`https://vounis.onrender.com/opportunities/${id}`);
+      const result = await axios.delete(`http://localhost:5000/opportunities/${id}`);
       return result;
     } catch (error) {
       return rejectWithValue(error.response.data.message || error.message);

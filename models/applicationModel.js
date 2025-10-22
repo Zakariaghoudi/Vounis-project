@@ -3,9 +3,18 @@ const schema = mongoose.Schema;
 
 const applicationSchema = new schema(
   {
-    id_host: String,
-    id_volunteer: String,
-    id_opportunity: String,
+    id_host: {
+      type : mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    id_volunteer:  {
+      type : mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    id_opportunity:  {
+      type : mongoose.Schema.Types.ObjectId,
+      ref: 'Opportunity'
+    },
     status: {
       type: String,
       enum: ["pending", "accepted", "rejected"],

@@ -87,7 +87,20 @@
     color: var(--primary-color);
     margin: 0 0 10px 0;
 }
-
+.opp-host-info{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px;
+    border-top: 1px solid #1e8e3e;
+}
+.host-avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+}
 /* Status Badges */
 .opp-status-badge {
     font-size: 0.8rem;

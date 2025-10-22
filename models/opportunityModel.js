@@ -3,9 +3,9 @@ const schema = mongoose.Schema;
 
 const opportunitySchema = new schema(
   {
-    id_host: {
-      type: String,
-      require: true  
+    postedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref : 'User',  
     },
 
     status: {

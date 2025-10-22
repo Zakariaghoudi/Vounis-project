@@ -137,6 +137,15 @@ function Discover() {
                       {opportunity?.skills || "Skills N/A"}
                     </span>
                   </div>
+                  {opportunity.postedBy && (
+                    <div className="opp-host-info" >
+                      <h6>Posted By : </h6>
+                      <img className="host-avatar" src={opportunity.postedBy?.profilePhoto} />
+                      <span className="host-name">
+                          {opportunity.postedBy.name} {opportunity.postedBy.lastName}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="card-actions">
