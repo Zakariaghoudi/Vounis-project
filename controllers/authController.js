@@ -11,7 +11,6 @@ exports.registerUser = async (req, res) => {
     phoneNumber,
     profilePhoto,
     role,
-    isAdmin,
     description,
   } = req.body;
   try {
@@ -21,6 +20,11 @@ exports.registerUser = async (req, res) => {
       return res.status(400).send({ message: "email already exist" });
     }
 
+    // security: never trust role/isAdmin from the client.
+    // only volunteer/host can be self-selected at registration, admin is always false.
+    const allowedRoles = ["volunteer", "host"];
+    const safeRole = allowedRoles.includes(role) ? role : "volunteer";
+
     // create new user
     const newUser = new User({
       name,
@@ -29,8 +33,8 @@ exports.registerUser = async (req, res) => {
       password,
       phoneNumber,
       profilePhoto,
-      role,
-      isAdmin,
+      role: safeRole,
+      isAdmin: false,
       description,
     });
 
@@ -192,9 +196,13 @@ exports.registerUser = async (req, res) => {
       `;
     // sent verfication code to  email :
     await sendMail(newUser.email, subject, html);
-    // save the new user
-    await newUser.save();
-    res.status(201).send(newUser, "Please verify your account");
+
+    // never send the password hash (or otp) back to the client
+    const safeUser = newUser.toObject();
+    delete safeUser.password;
+    delete safeUser.otp;
+
+    res.status(201).send({ user: safeUser, msg: "Please verify your account" });
   } catch (error) {
     console.log(error);
     res
@@ -230,8 +238,10 @@ exports.loginUser = async (req, res) => {
     const token = jwt.sign(payload, process.env.SECRETKEY, {
       expiresIn: "24d",
     });
+    const safeUser = currentuser.toObject();
+    delete safeUser.password;
     return res.status(200).send({
-      user: currentuser,
+      user: safeUser,
       msg: "Logged in Successfully",
       token: `Bearer ${token}`,
     });
@@ -273,8 +283,10 @@ exports.OtpVerify = async (req, res) => {
     const token = jwt.sign(payload, process.env.SECRETKEY, {
       expiresIn: "24d",
     });
+    const safeUser = user.toObject();
+    delete safeUser.password;
     res.status(201).send({
-      user: user,
+      user: safeUser,
       msg: " account verified and logged in successfully",
       token: `Bearer ${token}`,
     });
