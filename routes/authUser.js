@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const isAuth = require("../middleware/passport");
+const { isAdmin, isSelfOrAdmin } = require("../middleware/authorize");
 const User = require("../models/usersModel");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
@@ -22,10 +23,10 @@ const {
 //forget password
 router.post("/forgot-password", async (req, res) => {
   try {
-    const {email} =req.body
-    const user = await User.findOne({email});
+    const { email } = req.body;
+    const user = await User.findOne({ email });
     if (!user) {
-      res.status(403).send("you don't have an account" );
+      return res.status(403).send("you don't have an account");
     }
     //generate token
     const resetToken = crypto.randomBytes(32).toString("hex");
@@ -36,7 +37,7 @@ router.post("/forgot-password", async (req, res) => {
     await sendResetEmail(email, resetToken);
     res.status(200).send("email reintialisation  send successfully");
   } catch (error) {
-    res.status(500).send("please try again", error);
+    res.status(500).send({ msg: "please try again", error: error.message });
   }
 });
 //reset password
@@ -62,7 +63,7 @@ router.post("/reset-password/:token", async (req, res) => {
     await user.save();
     res.status(200).send("password has been updated successfully");
   } catch (error) {
-    res.status(500).send("cannot update your password", error);
+    res.status(500).send({ msg: "cannot update your password", error: error.message });
   }
 });
 // register a new user
@@ -73,42 +74,50 @@ router.post("/login", loginRules(), validate, loginUser);
 router.post("/verification", OtpVerify);
 // get cuurent user
 router.get("/current", isAuth(), currentUser);
-// get all users
-router.get("/", async (req, res) => {
+
+// get all users - ADMIN ONLY (was public before, was leaking password hashes)
+router.get("/", isAuth(), isAdmin, async (req, res) => {
   try {
-    const result = await User.find();
-    res.status(200).send(result, "users found");
+    const result = await User.find().select("-password -otp -resetPasswordToken");
+    res.status(200).send({ users: result, msg: "users found" });
   } catch (error) {
-    res.status(401).send({ msg: "cannot get the users list", error });
+    res.status(500).send({ msg: "cannot get the users list", error: error.message });
   }
 });
 
-// update a user
-router.put("/:id", async (req, res) => {
+// update a user - only the user themself or an admin, and only an admin can change role/isAdmin
+router.put("/:id", isAuth(), isSelfOrAdmin("id"), async (req, res) => {
   try {
-    const { password, ...otherUpdates } = req.body;
+    const { password, isAdmin: isAdminField, role, ...otherUpdates } = req.body;
+
     if (password) {
       const salt = await bcrypt.genSalt(10);
       otherUpdates.password = await bcrypt.hash(password, salt);
     }
+    // block privilege escalation: only an admin can change role/isAdmin
+    if (req.user.role === "admin") {
+      if (role) otherUpdates.role = role;
+      if (typeof isAdminField === "boolean") otherUpdates.isAdmin = isAdminField;
+    }
+
     const user = await User.findByIdAndUpdate(
       req.params.id,
       { $set: otherUpdates },
       { new: true }
-    );
-    res.status(200).send(user, "user updated");
+    ).select("-password -otp -resetPasswordToken");
+    res.status(200).send({ user, msg: "user updated" });
   } catch (error) {
-    res.status(400).send({ msg: "cannot update the user", error });
+    res.status(400).send({ msg: "cannot update the user", error: error.message });
   }
 });
 
-//delete a user
-router.delete("/:id", async (req, res) => {
+//delete a user - only the user themself or an admin
+router.delete("/:id", isAuth(), isSelfOrAdmin("id"), async (req, res) => {
   try {
     const result = await User.findByIdAndDelete(req.params.id);
-    await res.status(200).send(result, "user deleted");
+    res.status(200).send({ user: result, msg: "user deleted" });
   } catch (error) {
-    res.status(400).send({ msg: "cannot delete the user", error });
+    res.status(400).send({ msg: "cannot delete the user", error: error.message });
   }
 });
 
