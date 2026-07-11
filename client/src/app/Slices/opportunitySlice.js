@@ -1,18 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../api/axios";
 
 // add new  opportunities
 export const addOpportunity = createAsyncThunk(
   "/opportunity/add",
   async (opportunity, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/opportunities/add",
-        opportunity
-      );
+      const response = await api.post("/opportunities/add", opportunity);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.message || error.message);
+      return rejectWithValue(error.response?.data?.msg || error.message);
     }
   }
 );
@@ -21,10 +18,10 @@ export const getOpportunity = createAsyncThunk(
   "/opportunity/get",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:5000/opportunities");
+      const response = await api.get("/opportunities");
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.message || error.message);
+      return rejectWithValue(error.response?.data?.msg || error.message);
     }
   }
 );
@@ -33,13 +30,10 @@ export const updateOpportunity = createAsyncThunk(
   "/opportunity/update",
   async ({ id, editOpportunity }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `http://localhost:5000/opportunities/${id}`,
-        editOpportunity
-      );
+      const response = await api.put(`/opportunities/${id}`, editOpportunity);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.message || error.message);
+      return rejectWithValue(error.response?.data?.msg || error.message);
     }
   }
 );
@@ -48,10 +42,10 @@ export const deleteOpportunity = createAsyncThunk(
   "/opportunity/delete",
   async (id, { rejectWithValue }) => {
     try {
-      const result = await axios.delete(`http://localhost:5000/opportunities/${id}`);
-      return result;
+      const result = await api.delete(`/opportunities/${id}`);
+      return result.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.message || error.message);
+      return rejectWithValue(error.response?.data?.msg || error.message);
     }
   }
 );
