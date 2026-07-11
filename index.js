@@ -7,6 +7,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const allowedOrigins =[
+    'https://vounis.vercel.app',
   'https://vounis-project.vercel.app',
   'http://localhost:5173'
 ];
