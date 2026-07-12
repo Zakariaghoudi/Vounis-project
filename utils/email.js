@@ -13,6 +13,12 @@ const sendMail = async (to, subject, html) => {
     tls: {
       rejectUnauthorized: false,
     },
+    // Render (and several cloud hosts) resolve smtp.gmail.com to an IPv6
+    // address by default, which then hangs/times out. Forcing IPv4 fixes it.
+    family: 4,
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 15000,
   });
   const mailData = {
     from: `"Vounis Center" <${process.env.EMAIL_USER}>`,
